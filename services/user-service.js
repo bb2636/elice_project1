@@ -1,5 +1,5 @@
 
-import { User } from '../db/models/user-model.js';
+import { User } from '../db/models/users/user-model.js';
 
 export default class UserService {
     async Signup({userName, email, password}) {

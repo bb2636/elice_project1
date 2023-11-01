@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
-import shortId from './types/short-id.js';
+import shortId from '../types/short-id.js';
 
 const userSchema = new Schema({
 	shortId,
