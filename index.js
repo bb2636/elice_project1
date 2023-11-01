@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from "cors";
-import signupRouter from './routers/signup.js';
-import {result} from './routers/signup.js';
+import userRouter from './routers/user-router.js';
+import {result} from './routers/user-router.js';
 
 //require("dotenv").config();
 import { config } from "dotenv";
@@ -35,7 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 
 
 /* 사용자 관련 router 연결 */
-app.use("/signup", signupRouter);
+app.use("/signup", userRouter);
+app.use("/signin", userRouter);
+app.use("/users", userRouter);
 
 
 
