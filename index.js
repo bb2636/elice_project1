@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import signupRouter from "./routers/signup.js";
 import {result} from "./routers/signup.js";
 import paymentRouter from "./routers/payment.js";
