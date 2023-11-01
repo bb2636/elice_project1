@@ -16,10 +16,11 @@ import mongoose from 'mongoose';
 const port = 3000;
 const app = express();
 
+
 mongoose
   .connect(
     `mongodb+srv://${MONGO_NAME}:${MONGO_PASSWORD}@project-db.duhldeb.mongodb.net/?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true })
+    { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'elice-motors' })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
 
@@ -28,6 +29,8 @@ app.get("/", (req, res, next) => {
 });
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/signup", signupRouter);
 
 app.listen(port, () => {
