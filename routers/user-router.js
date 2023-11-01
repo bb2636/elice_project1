@@ -18,18 +18,22 @@ router.get('/', (req, res, next) => {
  */
 router.post("/signup", async (req, res, next) => {
     const { userName, email, password, role} = req.body;
+    
     try {
         const result = await userService.Signup({userName, email, password, role});
-        if(result.message == "DUPLICATED") {
-             throw new Error('이미 가입한 이메일입니다.');
-        } else if(result.message == "SUCCESS") {
+        if(result.message == "SUCCESS") {
             res.status(201);
             res.json(
                 {
                     message: "회원가입에 성공했습니다.",
                     user: result.user,
                 });
-        }
+        } else if(result.message == "DUPLICATED") {
+            throw new Error('이미 가입한 이메일입니다.');
+        } else if(result.message == "MISSING_FIELD") {
+            throw new Error('이름, 이메일, 비밀번호는 필수 요청 값입니다.');
+        } 
+        
     } catch(err) {
         res.status(400);
         res.json(
@@ -41,7 +45,17 @@ router.post("/signup", async (req, res, next) => {
 });
 
 
-const result = `Server is working`;
+/*
+ * 로그인 요청 (token 검증, 발급 로직 제외)
+ */
+router.post("/signin", async (req, res, next) => {
+    
+});
+
+
+
+
+//const result = `Server is working`;
 
 export default router;
 export {result};

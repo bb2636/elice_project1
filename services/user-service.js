@@ -7,7 +7,12 @@ export default class UserService {
 
     async Signup({userName, email, password, role = "USER"}) {
         const user = {userName, email, password, role};
+        
         try {
+            if( !userName || !email || !password ) {
+                return { message: "MISSING_FIELD"}
+            }
+
             const existUser = await User.findOne( {email: user.email} );
             if(existUser!==null) {
                 return { message : "DUPLICATED"};
