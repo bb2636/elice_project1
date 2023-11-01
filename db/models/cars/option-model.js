@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-const colorSchema = require('./colorSchema');
-const optionTypeSchema = require('./optionTypeSchema');
-const additionPriceSchema = require('./addtionPriceSchema');
+const colorSchema = require('./schemas/colorSchema');
+const optionTypeSchema = require('./schemas/optionTypeSchema');
+const additionPriceSchema = require('./schemas/addtionPriceSchema');
 
 const { Schema } = mongoose;
 

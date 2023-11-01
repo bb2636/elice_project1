@@ -29,12 +29,10 @@ const carSchema = new Schema({
         required: true
     },
     option: {
-        type: Schema.Types.ObjectId,
-        ref: 'Option'
+        Option
     },
     category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category'
+        Category
     },
 });
 
