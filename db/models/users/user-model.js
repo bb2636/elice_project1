@@ -26,7 +26,7 @@ const userSchema = new Schema({
 	address: {
 		type: String,
 	},
-	orders: [],
+	orderList: [],
 });
 
 const User = mongoose.model('User', userSchema);

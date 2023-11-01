@@ -31,7 +31,13 @@ app.get("/", (req, res, next) => {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+
+/* 사용자 관련 router 연결 */
 app.use("/signup", signupRouter);
+
+
 
 app.listen(port, () => {
     console.log(
