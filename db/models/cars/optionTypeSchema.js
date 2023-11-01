@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose');
 
-const TypeSchema = new Schema({
+const optionTypeSchema = new Schema({
   color:[
     {name: 'light'},
     {name: 'sgniture'},
@@ -8,4 +8,4 @@ const TypeSchema = new Schema({
   ],
 });
 
-module.exports = TypeSchema;
+module.exports = optionTypeSchema;
