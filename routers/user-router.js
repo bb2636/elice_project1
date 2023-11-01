@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 /*
  * 회원가입 요청
  */
-router.post("/", async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
     const { userName, email, password, role} = req.body;
     try {
         const result = await userService.Signup({userName, email, password, role});

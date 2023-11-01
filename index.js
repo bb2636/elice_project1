@@ -35,8 +35,6 @@ app.use(express.urlencoded({ extended: true }));
 
 
 /* 사용자 관련 router 연결 */
-app.use("/signup", userRouter);
-app.use("/signin", userRouter);
 app.use("/users", userRouter);
 
 
