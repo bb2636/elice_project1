@@ -26,6 +26,9 @@ app.get("/", (req, res, next) => {
   res.send(result);
 });
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use("/signup", signupRouter);
 
 //결제 응답 라우터
