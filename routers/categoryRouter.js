@@ -14,43 +14,35 @@ router.get('/:carId', async (req, res, next) => {
         res.status(200).json(car);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error retrieving car' });
+        res.status(500).json({ message: 'Error retrieving category' });
     }
 });
-
 router.post('/', async (req, res, next) => {
-    const { carName, carPrice, img, speed, mileage, option, category } = req.body;
+    const { carId, carType } = req.body;
     try {
-        const result = await carService.addNewCar({ carName, carPrice, img, speed, mileage, option, category });
-        res.status(201).json(result);
+        const result = await carService.addNewCar({ carId, carType });
+        res.status(201).json({message:'category creating success'});
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error creating car' });
+        res.status(500).json({ message: 'Error creating category' });
     }
 });
-
 
 router.put('/:carId', async (req, res, next) => {
     const carId = req.params.carId;
-    const { carName, carPrice, img, speed, mileage, option, category } = req.body;
+    const { carType } = req.body; //id는 수정안함
     try {
         const carToUpdate = await Car.findOne({ _id: carId });
         if (!carToUpdate) {
-            return res.status(404).json({ message: 'Car not found' });
+            return res.status(404).json({ message: 'Category not found' });
         }
-        carToUpdate.carName = carName;
-        carToUpdate.carPrice = carPrice;
-        carToUpdate.img = img;
-        carToUpdate.speed = speed;
-        carToUpdate.mileage = mileage;
-        carToUpdate.option = option;
-        carToUpdate.category = category;
+        carToUpdate.carType = carType;
         await carToUpdate.save();
 
-        res.status(200).json({ message: 'Car updated successfully' });
+        res.status(200).json({ message: 'Category updated successfully' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error updating car' });
+        res.status(500).json({ message: 'Error updating category' });
     }
 });
 
@@ -59,15 +51,14 @@ router.delete('/:carId', async (req, res, next) => {
     try {
         const car = await Car.findByIdAndDelete(carId);
         if (!car) {
-            return res.status(404).json({ message: 'Car not found' });
+            return res.status(404).json({ message: 'Category not found' });
         }
-        res.status(200).json({ message: 'Car deleted successfully' });
+        res.status(200).json({ message: 'Category deleted successfully' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error deleting car' });
+        res.status(500).json({ message: 'Error deleting category' });
     }
 });
 
-const result = `Server is working`;
 
 export default router;
