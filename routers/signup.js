@@ -1,12 +1,15 @@
 
 import { Router } from 'express';
-//import { Post }  from '../db/models';
+import { User } from '../db/models/user-model.js';
 
 const router = Router();
 
 router.get('/', (req, res, next) => {
-    res.send("signup router");
+    //res.send("signup router");
+    res.status(200);
+    res.json({name: "ted"});
 })
+
 
 const result = `Server is working`;
 

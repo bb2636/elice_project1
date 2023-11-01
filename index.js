@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from "cors";
 import signupRouter from './routers/signup.js';
 import {result} from './routers/signup.js';
 
@@ -9,6 +10,7 @@ config();
 const { MONGO_NAME, MONGO_PASSWORD } = env;
 
 import mongoose from 'mongoose';
+
 
 
 const port = 3000;
@@ -25,6 +27,7 @@ app.get("/", (req, res, next) => {
     res.send(result);
 });
 
+app.use(cors());
 app.use("/signup", signupRouter);
 
 app.listen(port, () => {
