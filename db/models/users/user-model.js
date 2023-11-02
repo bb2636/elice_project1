@@ -32,7 +32,6 @@ const userSchema = new Schema({
 		type: String,
 		default : null,
 	},
-	orderList: [],
 });
 
 const User = mongoose.model('User', userSchema);
