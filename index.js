@@ -1,10 +1,6 @@
 import express from 'express';
-<<<<<<< HEAD
-import carRouter from './routers/carRouter.js';
-=======
 //import carRouter from './routers/carRouter.js';
 import userRouter from './routers/user-router.js';
->>>>>>> feature/api/users
 import cors from 'cors';
 import { config } from 'dotenv';
 
@@ -26,26 +22,16 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log(err));
 
-<<<<<<< HEAD
-app.get("/", (req, res, next) => {
-  res.send(result);
-});
-
-=======
 
 /* user router */
 app.use("/users", userRouter);
 
 
->>>>>>> feature/api/users
 app.use(cors());
 app.use(express.json());
 
 
-<<<<<<< HEAD
-=======
 app.listen(port, () => {
   console.log(`server is running in ${port}`);
 });
 
->>>>>>> feature/api/users
