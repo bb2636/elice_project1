@@ -32,7 +32,9 @@ router.post("/signup", async (req, res, next) => {
             throw new Error('이미 가입한 이메일입니다.');
         } else if(result.message === "MISSING_FIELD") {
             throw new Error('이름, 이메일, 비밀번호는 필수 요청 값입니다.');
-        } 
+        } else {
+            throw {status: 404, message: 'unknown error'};
+        }
         
     } catch(err) {
         res.status(400);
@@ -94,6 +96,42 @@ router.get("/:email",
                 res.status(200);
                 res.json({
                     message: "회원 정보 조회에 성공했습니다.",
+                    user: result.user,
+                })
+            } else if (result.message ==="NO_MATCHES") {
+                throw {status: 404, message: "존재하지 않는 계정입니다.",};
+            } else {
+                throw {status: 404, message: "unknown error",};
+            }
+        } catch(err) {
+            res.status(err.status);
+            res.json(
+                {
+                    message: err.message, 
+                }
+            )
+        }
+    }
+);
+
+
+/*
+ * 회원 정보 변경 요청 (token 검증 로직은 TBD)
+ */
+router.put("/:email",
+    // 토큰 검증 미들웨어가 들어갈 곳
+    async (req, res, next) => {
+        
+        const { email } = req.params;
+        //res.json(email); //이메일 파라미터가 들어왔는지 확인
+        const {userName, age, phone, address} = req.body;
+        //res.json( {userName, age, phone, address });
+        try {
+            const result = await userService.updateUserInfo(email,  {userName, age, phone, address} );
+            if(result.message === "SUCCESS") {
+                res.status(200);
+                res.json({
+                    message: "회원 정보 변경에 성공했습니다.",
                     user: result.user,
                 })
             } else if (result.message ==="NO_MATCHES") {

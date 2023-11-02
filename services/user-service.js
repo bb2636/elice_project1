@@ -9,7 +9,7 @@ export default class UserService {
         const user = {userName, email, password, role};
 
         try {
-            if( !userName && !email && !password ) {
+            if( !userName || !email || !password ) {
                 return { message: "MISSING_FIELD"}
             }
 
@@ -30,7 +30,7 @@ export default class UserService {
     async Signin (user) {
 
         try {
-            if( !user.email && !user.password && !user.token ) {
+            if( !user.email || !user.password || !user.token ) {
                 return { message: "MISSING_FIELD"}
             }
             const existUser = await User.findOne( {email: user.email} );
@@ -63,9 +63,6 @@ export default class UserService {
     async getUserInfo (email) {
 
         try {
-            // if(!email) {
-            //     return { message : "MISSING_EMAIL" };
-            // }
             const matchedUser = await User.findOne( 
                 { email: email }, 
                 { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
@@ -81,4 +78,20 @@ export default class UserService {
         }
     }
 
+    async updateUserInfo (email, data) {
+
+        try {
+            const matchedUser = await User.findOneAndUpdate( 
+                { email: email }, 
+                { userName: data.userName, age: data.age, phone: data.phone, address:data.address, },
+                { new: true } );
+            if(matchedUser) {
+                return { message: "SUCCESS", user: matchedUser};
+            } else {
+                return { message: "NO_MATCHES", };
+            }
+        } catch(err) {
+            return err;
+        }
+    }
 }
