@@ -13,6 +13,7 @@ router.get('/', (req, res, next) => {
     
 });
 
+
 /*
  * 회원가입 요청
  */
@@ -150,6 +151,36 @@ router.put("/:email",
     }
 );
 
+
+/*
+ * 회원 정보 삭제 요청 (token 검증 로직은 TBD)
+ */
+router.delete("/:email",
+    // 토큰 검증 미들웨어가 들어갈 곳
+    async (req, res, next) => {
+        const { email } = req.params;
+        try {
+            const result = await userService.deleteUserInfo(email);
+            if(result.message === "SUCCESS") {
+                res.status(204);
+                res.json({
+                    message: "회원 정보 삭제에 성공했습니다.",
+                })
+            } else if (result.message ==="NO_MATCHES") {
+                throw {status: 404, message: "존재하지 않는 계정입니다.",};
+            } else {
+                throw {status: 404, message: "unknown error",};
+            }
+        } catch(err) {
+            res.status(err.status);
+            res.json(
+                {
+                    message: err.message, 
+                }
+            )
+        }
+    }
+);
 
 
 export default router;

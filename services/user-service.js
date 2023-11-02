@@ -94,4 +94,20 @@ export default class UserService {
             return err;
         }
     }
+
+    async deleteUserInfo (email) {
+
+        try {
+            const deletedUser = await User.findOneAndDelete( 
+                { email: email });
+            //return deletedUser //조건에 맞지 않으면 null을 반환
+            if(deletedUser) {
+                return { message: "SUCCESS", };
+            } else {
+                return { message: "NO_MATCHES", };
+            }
+        } catch(err) {
+            return err;
+        }
+    }
 }

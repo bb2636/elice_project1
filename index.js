@@ -1,5 +1,6 @@
 import express from 'express';
-import carRouter from './routers/carRouter.js';
+import userRouter from './routers/user-router.js';
+//import carRouter from './routers/carRouter.js';
 import cors from 'cors';
 import { config } from 'dotenv';
 
@@ -30,7 +31,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/car', carRouter); // '/car' 경로로 API 엔드포인트 사용
+//app.use('/car', carRouter); // '/car' 경로로 API 엔드포인트 사용
 
 /* 사용자 관련 router 연결 */
 app.use("/users", userRouter);
