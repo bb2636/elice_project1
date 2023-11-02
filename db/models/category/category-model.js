@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const carTypeSchema = require('./schemas/carTypeSchema');
+const carTypeSchema = require('./carTypeSchema');
 
 const { Schema } = mongoose;
 
