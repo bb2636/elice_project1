@@ -30,15 +30,15 @@ router.post("/signup", async (req, res, next) => {
                     user: result.user,
                 });
         } else if(result.message === "DUPLICATED") {
-            throw new Error('이미 가입한 이메일입니다.');
+            throw {status: 400, message: '이미 가입한 이메일입니다.'};
         } else if(result.message === "MISSING_FIELD") {
-            throw new Error('이름, 이메일, 비밀번호는 필수 요청 값입니다.');
+            throw {status: 400, message: '이름, 이메일, 비밀번호는 필수 요청 값입니다.'};
         } else {
             throw {status: 404, message: 'unknown error'};
         }
         
     } catch(err) {
-        res.status(400);
+        res.status(err.status);
         res.json(
             {
                 message: err.message, 
@@ -90,7 +90,7 @@ router.get("/:email",
     async (req, res, next) => {
         
         const { email } = req.params;
-        //res.json(email); //이메일 파라미터가 들어왔는지 확인
+
         try {
             const result = await userService.getUserInfo(email);
             if(result.message === "SUCCESS") {
@@ -124,9 +124,9 @@ router.put("/:email",
     async (req, res, next) => {
         
         const { email } = req.params;
-        //res.json(email); //이메일 파라미터가 들어왔는지 확인
+
         const {userName, age, phone, address} = req.body;
-        //res.json( {userName, age, phone, address });
+
         try {
             const result = await userService.updateUserInfo(email,  {userName, age, phone, address} );
             if(result.message === "SUCCESS") {
