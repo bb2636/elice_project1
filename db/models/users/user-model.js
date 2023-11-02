@@ -22,9 +22,15 @@ const userSchema = new Schema({
 	},
 	phone: {
 		type: Number,
+		default : null,
+	},
+	age: {
+		type: Number,
+		default : null,
 	},
 	address: {
 		type: String,
+		default : null,
 	},
 	orderList: [],
 });
