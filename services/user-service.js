@@ -45,6 +45,7 @@ export default class UserService {
             if(isPasswordValid) {
                 const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
                 const token = jwt.sign({ user_id: existUser.id }, secretKey);
+                // jwt.sign 시 첫번째 인자에 exp 키로 만료 시간을 설정할 수 있다.
 
                 return { 
                     message : "SUCCESS", 

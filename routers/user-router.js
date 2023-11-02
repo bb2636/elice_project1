@@ -76,7 +76,7 @@ router.post("/signup", async (req, res, next) => {
 
 
 /*
- * 로그인 요청 (token 검증, 발급 로직은 TBD)
+ * 로그인 요청 (token 발급 로직 포함)
  */
 router.post("/signin", async (req, res, next) => {
 
@@ -112,7 +112,7 @@ router.post("/signin", async (req, res, next) => {
 
 
 /*
- * 회원 정보 조회 요청 (token 검증 로직은 TBD)
+ * 회원 정보 조회 요청 (token 검증 로직은 미들웨어로)
  */
 router.get("/:email",
     login_required,  // 토큰 검증 미들웨어
@@ -147,7 +147,7 @@ router.get("/:email",
 
 
 /*
- * 회원 정보 변경 요청 (token 검증 로직은 TBD)
+ * 회원 정보 변경 요청 (token 검증 로직은 미들웨어로)
  */
 router.put("/:email",
     login_required, // 토큰 검증 미들웨어
@@ -184,7 +184,7 @@ router.put("/:email",
 
 
 /*
- * 회원 정보 삭제 요청 (token 검증 로직은 TBD)
+ * 회원 정보 삭제 요청 (token 검증 로직은 미들웨어로)
  */
 router.delete("/:email",
     login_required, // 토큰 검증 미들웨어
@@ -213,6 +213,15 @@ router.delete("/:email",
         }
     }
 );
+
+/*
+ * 로그아웃 요청 (token 만료 로직 TBD)
+ */
+router.post("/signout",
+    async (req, res, next) => {
+        
+    }
+)
 
 
 export default router;
