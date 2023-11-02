@@ -44,7 +44,7 @@ router.get("/",
  * 회원가입 요청
  */
 router.post("/signup", async (req, res, next) => {
-    const { userName, email, password, role} = req.body;
+    const { userName, email, password, role } = req.body;
     
     try {
         const result = await userService.Signup({userName, email, password, role});
@@ -219,7 +219,7 @@ router.delete("/:email",
  */
 router.post("/signout",
     async (req, res, next) => {
-        
+
     }
 )
 

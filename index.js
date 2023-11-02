@@ -1,6 +1,9 @@
 import express from 'express';
 import carRouter from './routers/carRouter.js';
 import userRouter from './routers/user-router.js';
+import signupRouter from './routers/signup-router.js';
+import signinRouter from './routers/signin-router.js';
+import signoutRouter from './routers/signout-router.js';
 import cors from 'cors';
 import { config } from 'dotenv';
 
@@ -32,6 +35,11 @@ app.use(
 
 /* user router */
 app.use("/users", userRouter);
+
+/* auth router */
+app.use("/signup", signupRouter);
+app.use("/signin", signinRouter);
+app.use("/signout", signoutRouter);
 
 
 app.use(cors());
