@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
-import passport from 'passport';
-
+import jwt from "jsonwebtoken";
 import { User } from '../db/models/users/user-model.js';
 
 export default class UserService {
@@ -30,7 +29,7 @@ export default class UserService {
     async Signin (user) {
 
         try {
-            if( !user.email || !user.password || !user.token ) {
+            if( !user.email || !user.password ) {
                 return { message: "MISSING_FIELD"}
             }
             const existUser = await User.findOne( {email: user.email} );
@@ -44,12 +43,16 @@ export default class UserService {
             const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
 
             if(isPasswordValid) {
+                const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+                const token = jwt.sign({ user_id: existUser.id }, secretKey);
+
                 return { 
                     message : "SUCCESS", 
                     user: {
                         email: existUser.email,
-                        token: "token",
-                    }
+                        
+                    },
+                    token: token,
                 }
             } else {
                 return { message : "NOT_MATCHED" };
@@ -105,6 +108,20 @@ export default class UserService {
                 return { message: "SUCCESS", };
             } else {
                 return { message: "NO_MATCHES", };
+            }
+        } catch(err) {
+            return err;
+        }
+    }
+
+    async getAllUsersInfo () {
+        try {
+            const allUsers = await User.find({}, 
+                { userName: 1, email: 1 ,age:1, phone: 1, address:1, role:1, orderList:1, });
+            if(allUsers) {
+                return { message: "SUCCESS", users:allUsers };
+            } else {
+                return { message: "NO_USERS", };
             }
         } catch(err) {
             return err;
