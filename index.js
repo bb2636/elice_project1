@@ -3,13 +3,13 @@ import cors from "cors";
 import signupRouter from "./routers/signup.js";
 import {result} from "./routers/signup.js";
 //주문 아이디 찾는 함수
-import {findByOrderId} from "./services/orderService.js";
+import {findByOrderId} from "./services/order-service.js";
 //결제 라우터
-import paymentRouter from "./routers/payment.js";
+import paymentRouter from "./routers/payment-router.js";
 //구매내역 라우터
-import orderRouter from "./routers/orders.js";
+import orderRouter from "./routers/orders-router.js";
 //구매 취소 라우터
-import orderDeleteRouter from "./routers/orders.js";
+import orderDeleteRouter from "./routers/orders-router.js";
 
 import {config} from "dotenv";
 

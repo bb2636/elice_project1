@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import {getUserOrders, createOrder, cancelOrder} from "../services/orderService.js";
+import {getUserOrders, createOrder, cancelOrder} from "../services/order-service.js";
 
 const router = express.Router();
 
