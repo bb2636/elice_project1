@@ -73,6 +73,28 @@ app.get("/:orderId", (req, res) => {
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+app.use("/signup", signupRouter);
+
+//결제 응답 라우터
+app.use("/payment", paymentRouter);
+
+//주문 내역 조회 라우터
+app.use("/orders", orderRouter);
+
+//주문 취소 라우터
+app.use("/deleteorder", orderDeleteRouter);
+
+app.get("/:orderId", (req, res) => {
+  const orderId = req.params.orderId;
+  const order = findByOrderId(orderId);
+
+  if (order) {
+    res.status(201).json(order);
+  } else {
+    res.status(404).json({message: "주문을 찾을 수 없습니다."});
+  }
+});
 app.use(express.urlencoded({ extended: true }));
 app.use('/car', carRouter); // '/car' 경로로 API 엔드포인트 사용
 
