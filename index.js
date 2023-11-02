@@ -2,7 +2,10 @@ import express from "express";
 import cors from "cors";
 import signupRouter from "./routers/signup.js";
 import {result} from "./routers/signup.js";
+//결제 라우터
 import paymentRouter from "./routers/payment.js";
+//구매내역 라우터
+import orderRoutes from "./routers/orders.js";
 
 //require("dotenv").config();
 import {config} from "dotenv";
@@ -34,6 +37,9 @@ app.use("/signup", signupRouter);
 
 //결제 응답 라우터
 app.use("/payment", paymentRouter);
+
+//주문 내역 라우터
+app.use("/ordered", orderRoutes);
 
 app.listen(port, () => {
   console.log(`서버가 정상적으로 시작되었습니다. 주소: http://localhost:${port}`);
