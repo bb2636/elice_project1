@@ -1,4 +1,4 @@
-import Order from "../db/models/order-model.js";
+import Order from "../db/models/orders/order-model.js";
 import asyncHandler from "express-async-handler";
 
 // 특정 유저의 주문 내역을 불러오는 함수
