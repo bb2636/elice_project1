@@ -2,7 +2,7 @@ import Order from "../db/models/orderModel.js";
 import asyncHandler from "express-async-handler";
 
 // 주문 내역을 불러오는 함수
-const getOrdersByUserId = asyncHandler(async (userId) => {
+const getUserOrders = asyncHandler(async (userId) => {
   const orders = await Order.find({userId});
   return orders;
 });
@@ -20,4 +20,4 @@ const cancelOrder = asyncHandler(async (orderId) => {
   return deletedOrder;
 });
 
-export {getOrdersByUserId, createOrder, cancelOrder};
+export {getUserOrders, createOrder, cancelOrder};
