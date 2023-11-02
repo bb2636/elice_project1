@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const optionTypeSchema = new Schema({
   color:[
@@ -8,4 +9,4 @@ const optionTypeSchema = new Schema({
   ],
 });
 
-module.exports = optionTypeSchema;
+export default optionTypeSchema;

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const carTypeSchema = require('./carTypeSchema');
+// import carTypeSchema from './carTypeSchema.js';
 
 const { Schema } = mongoose;
 
@@ -8,7 +8,10 @@ const categorySchema = new Schema({
         type: Number,
         required: true
     },
-    carType: [carTypeSchema],
+    carType: {
+        type: String,
+        default: "SUV/RV"
+    } // variation "SUV/RV", "Sedan" , "Electric"
 });
 
 const Category = mongoose.model('Category', categorySchema);

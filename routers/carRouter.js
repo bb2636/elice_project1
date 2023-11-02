@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { Car } from '../db/models/cars/cars-model';
-import CarService from '../services/car-service';
+import { Car } from '../db/models/cars/cars-model.js';
+import CarService from '../services/car-service.js';
 const carService = new CarService;
 const router = Router();
 

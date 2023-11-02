@@ -1,12 +1,13 @@
-const { Schema } = require('mongoose');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const ColorSchema = new Schema({
   color:[
-    {name: 'white'},
-    {name: 'gray'},
-    {name: 'red'},
-    {name: 'black'},
+    {white: 'white'},
+    {gray: 'gray'},
+    {red: 'red'},
+    {black: 'black'},
   ],
 });
 
-module.exports = ColorSchema;
+export default ColorSchema;

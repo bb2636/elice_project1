@@ -1,4 +1,5 @@
-const { Schema } = require('mongoose');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
 
 const carTypeSchema = new Schema({
   type:[
@@ -8,4 +9,4 @@ const carTypeSchema = new Schema({
   ],
 });
 
-module.exports = carTypeSchema;
+export default carTypeSchema;

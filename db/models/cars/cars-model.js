@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
-import Option from './option-model';
-import Category from './category-model';
+import Option from './option-model.js';
+import Category from '../category/category-model.js';
 
 const carSchema = new Schema({
 	carName: { 
@@ -13,7 +13,7 @@ const carSchema = new Schema({
 		required: true,
 	},
 	img: { 
-		type: Image,
+		type: String, // image link url을 담은 문자열
 		required: true 
 	},
 	speed: {
