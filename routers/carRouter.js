@@ -22,6 +22,7 @@ router.get('/', async(req,res,next)=>{
 router.get('/:carId', async (req, res, next) => {
     const {carId} = req.params.carId;
     try{
+        const result = await carService.getCarInfo(carId);
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 정보 조회에 성공했습니다", car: result.cars});
             return;
@@ -34,7 +35,7 @@ router.get('/:carId', async (req, res, next) => {
         res.status(err.status).json({message:err.message});
     }
 });
-
+//상품 등록
 router.post('/carup', async (req, res, next) => {
     const { carName, carPrice, img, speed, mileage, fuel, option, category } = req.body;
     try {
