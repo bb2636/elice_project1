@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Car } from '../db/models/cars/cars-model.js';
 import CarService from '../services/car-service.js';
 const carService = new CarService;
 const router = Router();
@@ -30,7 +29,7 @@ router.get('/:carId', async (req, res, next) => {
         }else if(result.message === "NO_MATCHES"){
             throw {status:404, message: "존재하지 않는 상품입니다"};
         }else{
-            throw {status:404, message: "unknow error"};
+            throw {status:404, message: "unknown error"};
         }
     }catch (error) {
         res.status(err.status).json({message:err.message});
@@ -67,7 +66,7 @@ router.put('/:carId', async (req, res, next) => {
         }else if(result.message === "NO_MATCHES"){
             throw {status: 404, message: "존재하지 않는 상품입니다"};
         }else{
-            throw {status: 404, message: "unkown error"};
+            throw {status: 404, message: "unknown error"};
         }
     }catch (error) {
         res.status(err.status).json({message:err.message});
@@ -75,16 +74,19 @@ router.put('/:carId', async (req, res, next) => {
 });
 
 router.delete('/:carId', async (req, res, next) => {
-    const carId = req.params.carId;
+    const {carId} = req.params;
     try {
-        const car = await Car.findByIdAndDelete(carId);
-        if (!car) {
-            return res.status(404).json({ message: 'Car not found' });
+        const result = await carService.deleteCarInfo(carId);
+        if(result.message === "SUCCESS"){
+            res.status(200).json({message: "상품 정보 삭제에 성공했습니다", car: result.car});
+            return;
+        }else if(result.message === "NO_MATCHES"){
+            throw {status: 404, message: "존재하지 않는 상품입니다"};
+        }else{
+            throw {status: 404, message: "unknown eror"}
         }
-        res.status(200).json({ message: 'Car deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error deleting car' });
+    }catch (error) {
+        res.status(err.status).json({message:err.message});
     }
 });
 
