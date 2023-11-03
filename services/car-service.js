@@ -19,7 +19,7 @@ export default class CarService {
         }
     }
     //전체 상품 조회
-    async getAllCarsInfo () {
+    async getAllCarsInfo() {
         try {
             const allCars = await Car.find({}, 
                 { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
@@ -29,6 +29,19 @@ export default class CarService {
                 return { message: "NO_CARS", };
             }
         } catch(err) {
+            return err;
+        }
+    }
+    //상품 상세 조회
+    async getCarInfo(carId){
+        try{
+            const matchCar = await Car.findOne(
+                {carId:carId},
+                {carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
+            if(matchCar){
+                return {message:"SUCCESS", car: matchCar};
+            }else{ return {message: "NO_MATCHES"};}
+        }catch(err){
             return err;
         }
     }
