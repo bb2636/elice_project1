@@ -24,7 +24,7 @@ export default class CarService {
             const allCars = await Car.find({}, 
                 { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
             if(allCars) {
-                return { message: "SUCCESS", users:allCars };
+                return { message: "SUCCESS", car :allCars };
             } else {
                 return { message: "NO_CARS", };
             }
