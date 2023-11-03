@@ -45,4 +45,20 @@ export default class CarService {
             return err;
         }
     }
+    //상품 수정
+    async updateCarInfo(carId, data){
+        try{
+            const updateCar = await Car.findOneAndUpdate(
+                {carId:carId},
+                {carName: data.carName, carPrice:data.carPrice, img: data.img, speed: data.speed, mileage: data.mileage, fuel: data.fuel, option: data.option, category: data.category,},
+                {new: true});
+            if(updateCar){
+                return {message: "SUCCESS", car: updateCar};
+            }else{
+                return {message: "NO_MATCHES"};
+            }
+        }catch(err){
+            return err;
+        }
+    }
 }
