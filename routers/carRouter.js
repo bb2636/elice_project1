@@ -14,7 +14,7 @@ router.get('/', async(req,res,next)=>{
         }else{
             throw {status: 404, message: 'unknown error'};
         }
-    }catch (error) {
+    }catch (err) {
         res.status(err.status).json({message:err.message});
     }
 })
@@ -31,7 +31,7 @@ router.get('/:carId', async (req, res, next) => {
         }else{
             throw {status:404, message: "unknown error"};
         }
-    }catch (error) {
+    }catch (err) {
         res.status(err.status).json({message:err.message});
     }
 });
@@ -49,7 +49,7 @@ router.post('/carup', async (req, res, next) => {
         }else{
             throw {status:404, message: "unknown error"};
         }
-    } catch (error) {
+    } catch (err) {
         res.status(err.status).json({message:err.message});
     }
 });
@@ -68,7 +68,7 @@ router.put('/:carId', async (req, res, next) => {
         }else{
             throw {status: 404, message: "unknown error"};
         }
-    }catch (error) {
+    }catch (err) {
         res.status(err.status).json({message:err.message});
     }
 });
@@ -85,7 +85,7 @@ router.delete('/:carId', async (req, res, next) => {
         }else{
             throw {status: 404, message: "unknown eror"}
         }
-    }catch (error) {
+    }catch (err) {
         res.status(err.status).json({message:err.message});
     }
 });
