@@ -40,42 +40,6 @@ router.get("/",
 );
 
 
-/*
- * 회원가입 요청
- */
-router.post("/signup", async (req, res, next) => {
-    const { userName, email, password, role } = req.body;
-    
-    try {
-        const result = await userService.Signup({userName, email, password, role});
-        if(result.message === "SUCCESS") {
-            res.status(201)
-               .json(
-                {
-                    message: "회원가입에 성공했습니다.",
-                    user: result.user,
-                });
-            return;
-        } else if(result.message === "DUPLICATED") {
-            throw {status: 400, message: '이미 가입한 이메일입니다.'};
-        } else if(result.message === "MISSING_FIELD") {
-            throw {status: 400, message: '이름, 이메일, 비밀번호는 필수 요청 값입니다.'};
-        } else {
-            throw {status: 404, message: 'unknown error'};
-        }
-        
-    } catch(err) {
-        res.status(err.status)
-           .json(
-            {
-                message: err.message, 
-            }
-        )
-    }
-});
-
-
-
 
 /*
  * 회원 정보 조회 요청 (token 검증 로직은 미들웨어로)
