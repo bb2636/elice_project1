@@ -7,7 +7,7 @@ const router = Router();
 router.get('/:carId', async (req, res, next) => {
     const carId = req.params.carId;
     try {
-        const car = await Car.findById(carId);
+        const car = await Car.findOne({carId});
         if (!car) {
             return res.status(404).json({ message: 'Car not found' });
         }
@@ -18,14 +18,21 @@ router.get('/:carId', async (req, res, next) => {
     }
 });
 
-router.post('/', async (req, res, next) => {
-    const { carName, carPrice, img, speed, mileage, option, category } = req.body;
+router.post('/carup', async (req, res, next) => {
+    const { carName, carPrice, img, speed, mileage, fuel, option, category } = req.body;
     try {
-        const result = await carService.addNewCar({ carName, carPrice, img, speed, mileage, option, category });
-        res.status(201).json({message:'상품 등록 성공', result});
+        const result = await carService.CarUp({ carName, carPrice, img, speed, mileage, fuel, option, category });
+        if(result.message = "Success"){
+            res.status(201).json({message:'상품 등록 성공', result});
+        }else if(result.message = "Duplicated"){
+            throw {status:400, message: "이미 등록된 상품아이디 입니다"};
+        }else if(result.message = "Missing_Field"){
+            throw {status:400, message: "상품 id, 이름, 가격, 이미지, 최대속력, 주행거리, 연비는 필수 요청 값입니다"};
+        }else{
+            throw {status:404, message: "unknown error"};
+        }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error creating car' });
+        res.status(err.status).json({message:err.message});
     }
 });
 
