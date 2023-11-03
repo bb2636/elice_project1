@@ -10,20 +10,21 @@ function login_required(req, res, next) {
     }
   
     try {
-  
       const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-      //jwt.verify(userToken, secretKey);
-
       const jwtDecoded = jwt.verify(userToken, secretKey);
+ 
       const user_id = jwtDecoded.user_id;
       req.currentUserId = user_id;
-  
       next();
     } catch (error) {
-      res.status(400).json({message: "정상적인 토큰이 아닙니다."});
-      return;
+       if (error.name === "TokenExpiredError") {
+          res.status(400).json({ message: "토큰이 만료되었습니다." });
+       } else {
+          res.status(400).json({ message: "정상적인 토큰이 아닙니다." });
+       }
+       return;
     }
-  }
+}
   
   
-  export { login_required };
+export { login_required };

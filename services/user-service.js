@@ -43,15 +43,20 @@ export default class UserService {
             const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
 
             if(isPasswordValid) {
+                const expirationTime = Math.floor(Date.now() / 1000) + 60*60; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
+                const payload = {
+                    user_id: existUser.id,
+                    role: existUser.role,
+                    exp: expirationTime,
+                }
                 const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                const token = jwt.sign({ user_id: existUser.id }, secretKey);
+                const token = jwt.sign(payload, secretKey);
                 // jwt.sign 시 첫번째 인자에 exp 키로 만료 시간을 설정할 수 있다.
 
                 return { 
                     message : "SUCCESS", 
                     user: {
                         email: existUser.email,
-                        
                     },
                     token: token,
                 }
@@ -62,6 +67,10 @@ export default class UserService {
         } catch(err) {
             return err;
         }
+    }
+
+    async signOut (token, email) {
+        // 이메일 존재 여부에 따라 토큰 만료 시키기
     }
 
     async getUserInfo (email) {
