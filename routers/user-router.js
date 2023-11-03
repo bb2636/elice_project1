@@ -14,7 +14,6 @@ const router = Router();
  */
 router.get("/",
     login_required, // 토큰 검증 미들웨어
-    admin_required, // 관리자 검증 미들웨어
     async (req, res, next) => {
         try {
             const result = await userService.getAllUsersInfo();
