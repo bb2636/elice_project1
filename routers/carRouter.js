@@ -2,7 +2,7 @@ import { Router } from 'express';
 import CarService from '../services/car-service.js';
 const carService = new CarService;
 const router = Router();
-//에러처리는 일단 crud 다 쓰고 next(err)로 바꿔보기..
+//에러처리는 일단 router, service 다 수정해보고 next(err)로 바꿔보기..
 
 //상품 전체 조회
 router.get('/', async(req,res,next)=>{
