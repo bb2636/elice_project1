@@ -88,7 +88,8 @@ app.get("/:orderId", (req, res) => {
   }
 });
 
-app.use('/cars', carRouter); // '/car' 경로로 API 엔드포인트 사용
+app.use('/cars', carRouter);
+app.use('/category', categoryRouter);
 
 app.listen(port, () => {
   console.log(`서버가 정상적으로 시작되었습니다. 주소: http://localhost:${port}`);

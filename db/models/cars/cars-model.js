@@ -24,6 +24,10 @@ const carSchema = new Schema({
 		type: Number,
         required: true
 	},
+	fuel:{
+		type: Number,
+		required: true
+	},
 	carId: {
         type: Number,
         required: true
