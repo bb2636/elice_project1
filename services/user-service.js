@@ -43,15 +43,20 @@ export default class UserService {
             const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
 
             if(isPasswordValid) {
+                const expirationTime = Math.floor(Date.now() / 1000) + 60*60; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
+                const payload = {
+                    user_id: existUser.id,
+                    role: existUser.role,
+                    exp: expirationTime,
+                }
                 const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                const token = jwt.sign({ user_id: existUser.id }, secretKey);
+                const token = jwt.sign(payload, secretKey);
                 // jwt.sign 시 첫번째 인자에 exp 키로 만료 시간을 설정할 수 있다.
 
                 return { 
                     message : "SUCCESS", 
                     user: {
                         email: existUser.email,
-                        
                     },
                     token: token,
                 }
@@ -64,11 +69,36 @@ export default class UserService {
         }
     }
 
-    async getUserInfo (email) {
+    async Signout (userToken) {
+        // 만료 시킨 토큰을 반환
+        try {
+            const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+            const jwtDecoded = jwt.verify(userToken, secretKey);
+            const newExp = Math.floor(Date.now() / 1000) - 1;
+            // return jwtDecoded;
+            const payload = {
+                user_id: jwtDecoded.user_id,
+                role: jwtDecoded.role,
+                exp: newExp,
+            }
+
+            const expiredToken = jwt.sign(payload, secretKey);
+
+            return { 
+                message : "SUCCESS", 
+                token: expiredToken,
+            }
+            
+        } catch(err) {
+            return err;
+        }
+    }
+
+    async getUserInfo (shortId) {
 
         try {
             const matchedUser = await User.findOne( 
-                { email: email }, 
+                { shortId: shortId }, 
                 { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
             // return matchedUser;
             if(matchedUser) {
@@ -82,11 +112,11 @@ export default class UserService {
         }
     }
 
-    async updateUserInfo (email, data) {
+    async updateUserInfo (shortId, data) {
 
         try {
             const matchedUser = await User.findOneAndUpdate( 
-                { email: email }, 
+                { shortId: shortId }, 
                 { userName: data.userName, age: data.age, phone: data.phone, address:data.address, },
                 { new: true } );
             if(matchedUser) {
@@ -99,11 +129,11 @@ export default class UserService {
         }
     }
 
-    async deleteUserInfo (email) {
+    async deleteUserInfo (shortId) {
 
         try {
             const deletedUser = await User.findOneAndDelete( 
-                { email: email });
+                { shortId: shortId });
             //return deletedUser //조건에 맞지 않으면 null을 반환
             if(deletedUser) {
                 return { message: "SUCCESS", };
