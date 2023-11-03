@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Category } from '../db/models/category/category-model'
 import CategoryService from '../services/category-service';
 const CategoryService = new CategoryService;
 const router = Router();
