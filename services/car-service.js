@@ -61,4 +61,17 @@ export default class CarService {
             return err;
         }
     }
+    //상품 삭제
+    async deleteCarInfo(carId){
+        try{
+            const deleteCar = await Car.findOneAndDelete({carId:carId});
+            if(deleteCar){
+                return {message: "SUCCESS"};
+            }else{
+                return {message: "NO_MATCHES"};
+            }
+        }catch(err){
+            return err;
+        }
+    }
 }
