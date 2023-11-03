@@ -8,8 +8,8 @@ export default class CategoryService{
             if(!carId || !carType){
                 return {message: "MISSING_FIELD"};
             }
-            const exiseCatego1ry = await Category.findOne({carId:category.carId});
-            if(exiseCategory != null){
+            const existCategory = await Category.findOne({carId:category.carId});
+            if(existCategory != null){
                 return {message: "DUPLICATED"};
             }
             const newCategory = await Category.create(category);
