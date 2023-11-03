@@ -69,8 +69,29 @@ export default class UserService {
         }
     }
 
-    async signOut (token, email) {
-        // 이메일 존재 여부에 따라 토큰 만료 시키기
+    async Signout (userToken) {
+        // 만료 시킨 토큰을 반환
+        try {
+            const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+            const jwtDecoded = jwt.verify(userToken, secretKey);
+            const newExp = Math.floor(Date.now() / 1000) - 1;
+            // return jwtDecoded;
+            const payload = {
+                user_id: jwtDecoded.user_id,
+                role: jwtDecoded.role,
+                exp: newExp,
+            }
+
+            const expiredToken = jwt.sign(payload, secretKey);
+
+            return { 
+                message : "SUCCESS", 
+                token: expiredToken,
+            }
+            
+        } catch(err) {
+            return err;
+        }
     }
 
     async getUserInfo (email) {
