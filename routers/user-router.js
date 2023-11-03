@@ -180,15 +180,6 @@ router.delete("/:email",
     }
 );
 
-/*
- * 로그아웃 요청 (token 만료 로직 TBD)
- */
-router.post("/signout",
-    async (req, res, next) => {
-
-    }
-)
-
 
 export default router;
 //const result = `Server is working`;
