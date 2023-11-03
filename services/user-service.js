@@ -94,11 +94,11 @@ export default class UserService {
         }
     }
 
-    async getUserInfo (email) {
+    async getUserInfo (shortId) {
 
         try {
             const matchedUser = await User.findOne( 
-                { email: email }, 
+                { shortId: shortId }, 
                 { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
             // return matchedUser;
             if(matchedUser) {
@@ -112,11 +112,11 @@ export default class UserService {
         }
     }
 
-    async updateUserInfo (email, data) {
+    async updateUserInfo (shortId, data) {
 
         try {
             const matchedUser = await User.findOneAndUpdate( 
-                { email: email }, 
+                { shortId: shortId }, 
                 { userName: data.userName, age: data.age, phone: data.phone, address:data.address, },
                 { new: true } );
             if(matchedUser) {
@@ -129,11 +129,11 @@ export default class UserService {
         }
     }
 
-    async deleteUserInfo (email) {
+    async deleteUserInfo (shortId) {
 
         try {
             const deletedUser = await User.findOneAndDelete( 
-                { email: email });
+                { shortId: shortId });
             //return deletedUser //조건에 맞지 않으면 null을 반환
             if(deletedUser) {
                 return { message: "SUCCESS", };

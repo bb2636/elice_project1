@@ -44,14 +44,14 @@ router.get("/",
 /*
  * 회원 정보 조회 요청 (token 검증 로직은 미들웨어로)
  */
-router.get("/:email",
+router.get("/:shortId",
     login_required,  // 토큰 검증 미들웨어
     async (req, res, next) => {
         
-        const { email } = req.params;
+        const { shortId } = req.params;
 
         try {
-            const result = await userService.getUserInfo(email);
+            const result = await userService.getUserInfo(shortId);
             if(result.message === "SUCCESS") {
                 res.status(200)
                    .json({
@@ -79,16 +79,16 @@ router.get("/:email",
 /*
  * 회원 정보 변경 요청 (token 검증 로직은 미들웨어로)
  */
-router.put("/:email",
+router.put("/:shortId",
     login_required, // 토큰 검증 미들웨어
     async (req, res, next) => {
         
-        const { email } = req.params;
+        const { shortId } = req.params;
 
         const {userName, age, phone, address} = req.body;
 
         try {
-            const result = await userService.updateUserInfo(email,  {userName, age, phone, address} );
+            const result = await userService.updateUserInfo(shortId,  {userName, age, phone, address} );
             if(result.message === "SUCCESS") {
                 res.status(200)
                    .json({
@@ -116,12 +116,12 @@ router.put("/:email",
 /*
  * 회원 정보 삭제 요청 (token 검증 로직은 미들웨어로)
  */
-router.delete("/:email",
+router.delete("/:shortId",
     login_required, // 토큰 검증 미들웨어
     async (req, res, next) => {
-        const { email } = req.params;
+        const { shortId } = req.params;
         try {
-            const result = await userService.deleteUserInfo(email);
+            const result = await userService.deleteUserInfo(shortId);
             if(result.message === "SUCCESS") {
                 res.status(204)
                    .json({
