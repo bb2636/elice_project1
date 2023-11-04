@@ -3,7 +3,8 @@ import { Car } from '../db/models/cars/cars-model.js';
 export default class CarService {
     //상품 등록
     async CarUp({carName, carPrice, img,speed,mileage,fuel,carId,option,category}) {
-        const car = await Car.create({carName, carPrice, img,speed,mileage,fuel,carId,option,category});
+
+        const car = {carName, carPrice, img,speed,mileage,fuel,carId,option,category};
         try{
             if(!carName || !carPrice || !img || !speed || !mileage || !fuel || !carId){
                 return {message : "MISSING_FIELD"}
