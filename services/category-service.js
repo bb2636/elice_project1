@@ -3,7 +3,7 @@ import {Category} from '../db/models/category/category-model';
 export default class CategoryService{
     //카테고리 등록
     async CategoryUp({carId, carType}){
-        const category = await Category.create({carId, carType});
+        const category = {carId, carType};
         try{
             if(!carId || !carType){
                 return {message: "MISSING_FIELD"};
