@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import Order from "../db/models/orders/order-model.js";
+import Order from "../../db/models/orders/order-model.js";
 
 // 결제하기 버튼을 눌렀을 때의 응답이 성공이면 -> 주문 내역에 주문 추가(생성)
 router.post("/", async (req, res) => {
