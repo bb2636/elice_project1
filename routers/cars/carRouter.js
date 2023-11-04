@@ -20,7 +20,7 @@ router.get('/', async(req,res,next)=>{
 })
 //상품 상세 조회
 router.get('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.body.carId)
+    const {carId} = parseInt(req.params);
     try{
         const result = await carService.getCarInfo(carId);
         if(result.message === "SUCCESS"){
@@ -56,7 +56,7 @@ router.post('/carup', async (req, res, next) => {
 
 
 router.put('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.body.carId)
+    const {carId} = parseInt(req.params);
     const {carName, carPrice, img,speed,mileage,fuel,option,category} = req.body;
     try{
         const result = await carService.updateCarInfo(carId, {carName, carPrice, img,speed,mileage,fuel,option,category});
@@ -74,7 +74,7 @@ router.put('/:carId', async (req, res, next) => {
 });
 
 router.delete('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.body.carId)
+    const {carId} = parseInt(req.params);
     try {
         const result = await carService.deleteCarInfo(carId);
         if(result.message === "SUCCESS"){
