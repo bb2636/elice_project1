@@ -1,5 +1,5 @@
 import express from "express";
-import {getUserOrders} from "../services/order-services.js";
+import {getUserOrders} from "../../services/order-services.js";
 
 const router = express.Router();
 

@@ -1,8 +1,8 @@
 
 import { Router } from 'express';
-import UserService from '../services/user-service.js';
-import { login_required } from "../middlewares/auth/login-required.js";
-import { admin_required } from "../middlewares/auth/admin-required.js";
+import UserService from '../../services/user-service.js';
+import { login_required } from "../../middlewares/auth/login-required.js";
+import { validator_params } from '../../middlewares/validator/validator-params.js';
 
 
 const userService = new UserService;
@@ -44,6 +44,7 @@ router.get("/",
  * 회원 정보 조회 요청 (token 검증 로직은 미들웨어로)
  */
 router.get("/:shortId",
+    validator_params, // 파라미터 밸리데이션 미들웨어
     login_required,  // 토큰 검증 미들웨어
     async (req, res, next) => {
         
@@ -79,6 +80,7 @@ router.get("/:shortId",
  * 회원 정보 변경 요청 (token 검증 로직은 미들웨어로)
  */
 router.put("/:shortId",
+    validator_params, // 파라미터 밸리데이션 미들웨어
     login_required, // 토큰 검증 미들웨어
     async (req, res, next) => {
         
@@ -116,6 +118,7 @@ router.put("/:shortId",
  * 회원 정보 삭제 요청 (token 검증 로직은 미들웨어로)
  */
 router.delete("/:shortId",
+    validator_params, // 파라미터 밸리데이션 미들웨어
     login_required, // 토큰 검증 미들웨어
     async (req, res, next) => {
         const { shortId } = req.params;
@@ -145,5 +148,3 @@ router.delete("/:shortId",
 
 
 export default router;
-//const result = `Server is working`;
-//export {result};

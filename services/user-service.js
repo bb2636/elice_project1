@@ -8,10 +8,6 @@ export default class UserService {
         const user = {userName, email, password, role};
 
         try {
-            if( !userName || !email || !password ) {
-                return { message: "MISSING_FIELD"}
-            }
-
             const existUser = await User.findOne( {email: user.email} );
             if(existUser!==null) {
                 return { message : "DUPLICATED"};
@@ -29,12 +25,9 @@ export default class UserService {
     async Signin (user) {
 
         try {
-            if( !user.email || !user.password ) {
-                return { message: "MISSING_FIELD"}
-            }
             const existUser = await User.findOne( {email: user.email} );
 
-            if(existUser===null) {
+            if(!existUser) {
                 return { message : "NOT_EXIST_USER"};
             }
 
@@ -61,7 +54,7 @@ export default class UserService {
                     token: token,
                 }
             } else {
-                return { message : "NOT_MATCHED" };
+                throw { message : "NOT_MATCHED" };
             }
             
         } catch(err) {
@@ -104,7 +97,7 @@ export default class UserService {
             if(matchedUser) {
                 return { message: "SUCCESS", user: matchedUser};
             } else {
-                return { message: "NO_MATCHES", };
+                throw { message: "NO_MATCHES", };
             }
             
         } catch(err) {
@@ -122,7 +115,7 @@ export default class UserService {
             if(matchedUser) {
                 return { message: "SUCCESS", user: matchedUser};
             } else {
-                return { message: "NO_MATCHES", };
+                throw { message: "NO_MATCHES", };
             }
         } catch(err) {
             return err;
@@ -138,7 +131,7 @@ export default class UserService {
             if(deletedUser) {
                 return { message: "SUCCESS", };
             } else {
-                return { message: "NO_MATCHES", };
+                throw { message: "NO_MATCHES", };
             }
         } catch(err) {
             return err;
@@ -152,7 +145,7 @@ export default class UserService {
             if(allUsers) {
                 return { message: "SUCCESS", users:allUsers };
             } else {
-                return { message: "NO_USERS", };
+                throw { message: "NO_USERS", };
             }
         } catch(err) {
             return err;

@@ -1,5 +1,5 @@
 import express from "express";
-import {deleteOrder} from "../services/order-services.js";
+import {deleteOrder} from "../../services/order-services.js";
 
 const router = express.Router();
 
