@@ -4,7 +4,7 @@ const CategoryService = new CategoryService;
 const router = Router();
 
 router.get('/:carId', async (req, res, next) => {
-    const {carId} = req.params.carId;
+    const {carId} = parseInt(req.params);
     try{
         const result = await CategoryService.getAllCategory(carId);
         if(result.message === "SUCCESS"){
@@ -32,7 +32,7 @@ router.post('/categoryup', async (req, res, next) => {
 });
 
 router.put('/:carId', async (req, res, next) => {
-    const {carId} = req.params;
+    const {carId} = parseInt(req.params);
     const { carType } = req.body; //id는 수정안함
     try {
         const result = await CategoryService.updateCategoryInfo(carId, carType);
@@ -51,7 +51,7 @@ router.put('/:carId', async (req, res, next) => {
 });
 
 router.delete('/:carId', async (req, res, next) => {
-    const {carId} = req.params;
+    const {carId} = parseInt(req.params);
     try {
         const category = await CategoryService.deleteCategoryInfo(carId);
         if(result.message === "SUCCESS"){
