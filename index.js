@@ -11,17 +11,17 @@ import paymentRouter from "./routers/payment-router.js";
 //구매내역 라우터
 import orderRouter from "./routers/orders-router.js";
 //구매 취소 라우터
-import orderDeleteRouter from "./routers/orders-router.js";
+import orderDeleteRouter from "./routers/orders-delete-router.js";
 
-import cors from 'cors';
-import { config } from 'dotenv';
+import cors from "cors";
+import {config} from "dotenv";
 
 config(); // dotenv 설정 호출
 
 const MONGO_NAME = process.env.MONGO_NAME;
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD;
 
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const port = 3000;
 const app = express();
@@ -59,11 +59,10 @@ app.use("/payment", paymentRouter);
 //주문 내역 조회 라우터
 app.use("/orders", orderRouter);
 //주문 취소 라우터
-app.use("/orders", orderDeleteRouter);
+app.use("/orders/delete", orderDeleteRouter);
 
 app.use("/car", carRouter); // '/car' 경로로 API 엔드포인트 사용
 
 app.listen(port, () => {
   console.log(`서버가 정상적으로 시작되었습니다. 주소: http://localhost:${port}`);
 });
-

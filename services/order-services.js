@@ -31,16 +31,26 @@ async function findByOrderId(orderId) {
 
 // 주문 삭제 함수
 async function deleteOrder(orderId) {
-  try {
-    const result = await Order.deleteOne({_id: orderId});
+  if (!orderId) {
+    throw new Error("해당 주문ID와 일치하지 않습니다.");
+  }
 
-    if (result.deletedCount === 0) {
-      return "주문을 찾을 수 없습니다.";
+  try {
+    const order = await findByOrderId(orderId);
+
+    if (!order) {
+      return "해당 유저의 주문 내역이 없습니다.";
     }
 
-    return "주문이 삭제되었습니다.";
+    const deleteResult = await Order.deleteOne({_id: orderId});
+
+    if (deleteResult.deletedCount === 0) {
+      return "삭제 가능한 주문이 없습니다.";
+    }
+
+    return "주문이 정상적으로 삭제되었습니다.";
   } catch (error) {
-    throw error;
+    throw new Error("주문을 삭제하는 동안 오류가 발생했습니다: " + error.message);
   }
 }
 

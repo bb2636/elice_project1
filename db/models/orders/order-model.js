@@ -1,16 +1,35 @@
 import mongoose from "mongoose";
 const {Schema} = mongoose;
 
-//order 스키마 생성 (모두 필수 요소일까요?)
 const orderSchema = new Schema({
-  name: String,
-  status: String,
-  color: String,
-  price: Number,
-  option: String,
-  userId: String,
+  products: [
+    {
+      productInfo: {
+        name: String,
+        color: String,
+        option: String,
+        price: Number,
+      },
+      quantity: Number,
+    },
+  ],
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
+  user: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+  },
 });
 
 const Order = mongoose.model("Order", orderSchema);
-
 export default Order;
