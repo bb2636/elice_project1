@@ -6,9 +6,6 @@ export default class CarService {
 
         const car = {carName, carPrice, img,speed,mileage,fuel,carId,option,category};
         try{
-            if(!carName || !carPrice || !img || !speed || !mileage || !fuel || !carId){
-                return {message : "MISSING_FIELD"}
-            }
             const existCar = await Car.findOne({carId: car.carId});
             if(existCar != null){
                 return {message: "DUPLICATED"}; //carId중복
