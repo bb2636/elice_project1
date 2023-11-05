@@ -35,24 +35,6 @@ router.get('/:carId', async (req, res, next) => {
         res.status(err.status).json({message:err.message});
     }
 });
-//상품 등록
-router.post('/carup', async (req, res, next) => {
-    const { carName, carPrice, img, speed, mileage, fuel, option, category } = req.body;
-    try {
-        const result = await carService.CarUp({ carName, carPrice, img, speed, mileage, fuel, option, category });
-        if(result.message = "SUCCESS"){
-            res.status(201).json({message:'상품 등록 성공', car: result.car});
-        }else if(result.message === "DUPLICATED"){
-            throw {status:400, message: "이미 등록된 상품아이디 입니다"};
-        }else if(result.message === "MISSING_FIELD"){
-            throw {status:400, message: "상품 id, 이름, 가격, 이미지, 최대속력, 주행거리, 연비는 필수 요청 값입니다"};
-        }else{
-            throw {status:404, message: "unknown error"};
-        }
-    } catch (err) {
-        res.status(err.status).json({message:err.message});
-    }
-});
 
 
 router.put('/:carId', async (req, res, next) => {
