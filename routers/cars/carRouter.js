@@ -20,9 +20,9 @@ router.get('/', async(req,res,next)=>{
 })
 //상품 상세 조회
 router.get('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+    const {carId} = req.params;
     try{
-        const result = await carService.getCarInfo(carId);
+        const result = await carService.getCarInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 정보 조회에 성공했습니다", car: result.car});
             return;
@@ -56,10 +56,10 @@ router.post('/carup', async (req, res, next) => {
 
 
 router.put('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+    const {carId} = req.params;
     const {carName, carPrice, img,speed,mileage,fuel,option,category} = req.body;
     try{
-        const result = await carService.updateCarInfo(carId, {carName, carPrice, img,speed,mileage,fuel,option,category});
+        const result = await carService.updateCarInfo(parseInt(carId), {carName, carPrice, img,speed,mileage,fuel,option,category});
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 수정에 성공했습니다", car: result.car});
             return;
@@ -74,9 +74,9 @@ router.put('/:carId', async (req, res, next) => {
 });
 
 router.delete('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+    const {carId} =req.params;
     try {
-        const result = await carService.deleteCarInfo(carId);
+        const result = await carService.deleteCarInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
             res.status(200).json({message: "상품 정보 삭제에 성공했습니다", car: result.car});
             return;
