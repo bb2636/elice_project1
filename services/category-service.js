@@ -1,4 +1,4 @@
-import {Category} from '../db/models/category/category-model';
+import Category from '../db/models/category/category-model.js';
 
 export default class CategoryService{
     //카테고리 등록

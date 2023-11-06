@@ -7,6 +7,7 @@ import signupRouter from "./account/signup-router.js";
 import signinRouter from "./account/signin-router.js";
 import signoutRouter from "./account/signout-router.js";
 import carupRouter from "./cars/carup-router.js";
+import categoryRouter from "./category/categoryRouter.js"
 
 //결제 라우터
 import paymentRouter from "./payment/payment-router.js";
@@ -32,6 +33,9 @@ mainRouter.use("/orders", orderRouter);
 mainRouter.use("/orders", orderDeleteRouter);
 
 mainRouter.use("/cars", carRouter);
+
+mainRouter.use("/category", categoryRouter);
+
 //상품 등록 라우터
 mainRouter.use("/carup", carupRouter);
 

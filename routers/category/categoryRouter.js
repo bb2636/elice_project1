@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import CategoryService from '../../services/category-service';
-const CategoryService = new CategoryService;
+import CategoryService from '../../services/category-service.js';
+const categoryService = new CategoryService;
 const router = Router();
 
 router.get('/:carType', async (req, res, next) => {
     const {carType} = parseInt(req.params);
     try{
-        const result = await CategoryService.getAllCategory(carId);
+        const result = await categoryService.getAllCategory(carId);
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"카테고리 조회에 성공했습니다", category: result.category});
             return;
@@ -22,7 +22,7 @@ router.get('/:carType', async (req, res, next) => {
 router.post('/categoryup', async (req, res, next) => {
     const { carId, carType } = req.body;
     try {
-        const result = await CategoryService.CategoryUp({ carId, carType });
+        const result = await categoryService.CategoryUp({ carId, carType });
         res.status(201).json({message:'category creating success',result});
     } catch (error) {
         console.error(error);
@@ -35,7 +35,7 @@ router.put('/:carId', async (req, res, next) => {
     const {carId} = parseInt(req.params);
     const { carType } = req.body; //id는 수정안함
     try {
-        const result = await CategoryService.updateCategoryInfo(carId, carType);
+        const result = await categoryService.updateCategoryInfo(carId, carType);
         if(result.message = "SUCCESS"){
             res.status(201).json({message:'상품 등록 성공', category: result.category});
         }else if(result.message === "DUPLICATED"){
@@ -53,7 +53,7 @@ router.put('/:carId', async (req, res, next) => {
 router.delete('/:carId', async (req, res, next) => {
     const {carId} = parseInt(req.params);
     try {
-        const category = await CategoryService.deleteCategoryInfo(carId);
+        const category = await categoryService.deleteCategoryInfo(carId);
         if(result.message === "SUCCESS"){
             res.status(200).json({message: "카테고리 삭제에 성공했습니다", category: result.category});
             return;
