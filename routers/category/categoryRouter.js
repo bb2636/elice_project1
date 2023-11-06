@@ -3,8 +3,8 @@ import CategoryService from '../../services/category-service';
 const CategoryService = new CategoryService;
 const router = Router();
 
-router.get('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+router.get('/:carType', async (req, res, next) => {
+    const {carType} = parseInt(req.params);
     try{
         const result = await CategoryService.getAllCategory(carId);
         if(result.message === "SUCCESS"){

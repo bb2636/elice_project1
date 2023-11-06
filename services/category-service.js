@@ -20,9 +20,9 @@ export default class CategoryService{
     }
     //카테고리 전체조회
     //상세조회는 필요 없나..?
-    async getAllCategory(){
+    async getAllCategory(carType){
         try{
-            const allCategory = await Category.find({},
+            const allCategory = await Category.find({carType:carType},
                 {carId:1, carType:1});
             if(allCategory){
                 return {message: "SUCCESS", category: allCategory};
