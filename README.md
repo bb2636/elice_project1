@@ -42,7 +42,3 @@ $ npm install
 ```
 $ node index.js
 ```
-
-# asyncHandler 사용
-
-npm install --save express-async-handler
