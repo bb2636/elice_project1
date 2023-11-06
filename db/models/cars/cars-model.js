@@ -33,7 +33,7 @@ const carSchema = new Schema({
         required: true
     },
     option: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Option'
     },
     category: {
