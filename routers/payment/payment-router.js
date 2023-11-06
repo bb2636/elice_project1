@@ -13,13 +13,13 @@ router.post("/", async (req, res) => {
   }
 
   try {
+    const productObjects = products.map((product) => ({
+      productInfo: product.productInfo,
+      quantity: product.quantity || 1, // 기본값으로 1 설정
+    }));
+
     const newOrder = new Order({
-      products: [
-        {
-          productInfo,
-          quantity: 1,
-        },
-      ],
+      products: productObjects,
       totalAmount: amountInfo,
       user: userId,
       address,
