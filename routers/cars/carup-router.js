@@ -8,7 +8,7 @@ const carService = new CarService;
 router.post('/',validator_carup,
     async (req,res,next) => {
         try {
-            const result = await carService.CarUp({ carName, carPrice, img, speed, mileage, fuel, option, category });
+            const result = await carService.CarUp(req.body);
             if(result.message = "SUCCESS"){
                 res.status(201).json({message:'상품 등록 성공', car: result.car});
             }else if(result.message === "DUPLICATED"){
