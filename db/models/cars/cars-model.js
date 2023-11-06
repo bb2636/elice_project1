@@ -37,8 +37,8 @@ const carSchema = new Schema({
         ref: 'Option'
     },
     category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category'
+        type: String,
+        required: true
     },
 });
 

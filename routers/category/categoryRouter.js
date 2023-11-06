@@ -4,9 +4,10 @@ const categoryService = new CategoryService;
 const router = Router();
 
 router.get('/:carType', async (req, res, next) => {
-    const {carType} = parseInt(req.params);
+    const {carType} = req.params;
+    
     try{
-        const result = await categoryService.getAllCategory(carId);
+        const result = await categoryService.getAllCategory(carType);
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"카테고리 조회에 성공했습니다", category: result.category});
             return;

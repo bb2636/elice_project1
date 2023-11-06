@@ -1,4 +1,5 @@
 import Category from '../db/models/category/category-model.js';
+import { Car } from '../db/models/cars/cars-model.js';
 
 export default class CategoryService{
     //카테고리 등록
@@ -21,9 +22,12 @@ export default class CategoryService{
     //카테고리 전체조회
     //상세조회는 필요 없나..?
     async getAllCategory(carType){
+        
         try{
-            const allCategory = await Category.find({carType:carType},
-                {carId:1, carType:1});
+           
+            const allCategory = await Car.find(
+                {category : carType},
+                { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
             if(allCategory){
                 return {message: "SUCCESS", category: allCategory};
             }else{
