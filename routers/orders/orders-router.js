@@ -1,16 +1,19 @@
 import express from "express";
 import {getUserOrders} from "../services/order-services.js";
-// import validateOrder from "../middlewares/validator/validator-order.js";
+
 const router = express.Router();
+
+// 주문 수정(관리자 -> 세션 필요할 것 같아욥) 배송 상태
 
 //주문 내역 조회
 router.get("/", async (req, res) => {
   const userId = req.query.userId;
   if (userId == "" || userId == null) {
-    res.status(400).json({message: "주문자 정보를 찾을 수 없습니다."});
+    res.status(500).json({message: "주문자 정보를 찾을 수 없습니다."});
   }
   try {
     const orders = await getUserOrders(userId);
+
     if (orders.length > 0) {
       res.json(orders);
     } else {

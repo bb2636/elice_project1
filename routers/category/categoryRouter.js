@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import CategoryService from '../services/category-service';
+import CategoryService from '../../services/category-service';
 const CategoryService = new CategoryService;
 const router = Router();
 

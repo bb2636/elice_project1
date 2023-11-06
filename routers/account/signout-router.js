@@ -1,4 +1,4 @@
-import UserService from '../services/user-service.js';
+import UserService from '../../services/user-service.js';
 import { Router } from 'express';
 const router = Router();
 
@@ -19,7 +19,7 @@ router.post("/", async (req, res, next) => {
         }
     } catch(err) {
         res.status(err.status)
-            json({
+            .json({
                     message: err.message, 
                 });
     }
