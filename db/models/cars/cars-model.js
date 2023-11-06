@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
-import Option from './option-model.js';
-import Category from '../category/category-model.js';
+// import Option from './option-model.js';
+// import Category from '../category/category-model.js';
 
 const carSchema = new Schema({
 	carName: { 

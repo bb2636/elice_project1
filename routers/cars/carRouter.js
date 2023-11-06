@@ -20,9 +20,9 @@ router.get('/', async(req,res,next)=>{
 })
 //상품 상세 조회
 router.get('/:carId', async (req, res, next) => {
-    const {carId} = req.params.carId;
+    const {carId} = req.params;
     try{
-        const result = await carService.getCarInfo(carId);
+        const result = await carService.getCarInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 정보 조회에 성공했습니다", car: result.car});
             return;
@@ -35,31 +35,13 @@ router.get('/:carId', async (req, res, next) => {
         res.status(err.status).json({message:err.message});
     }
 });
-//상품 등록
-router.post('/carup', async (req, res, next) => {
-    const { carName, carPrice, img, speed, mileage, fuel, option, category } = req.body;
-    try {
-        const result = await carService.CarUp({ carName, carPrice, img, speed, mileage, fuel, option, category });
-        if(result.message = "SUCCESS"){
-            res.status(201).json({message:'상품 등록 성공', car: result.car});
-        }else if(result.message === "DUPLICATED"){
-            throw {status:400, message: "이미 등록된 상품아이디 입니다"};
-        }else if(result.message === "MISSING_FIELD"){
-            throw {status:400, message: "상품 id, 이름, 가격, 이미지, 최대속력, 주행거리, 연비는 필수 요청 값입니다"};
-        }else{
-            throw {status:404, message: "unknown error"};
-        }
-    } catch (err) {
-        res.status(err.status).json({message:err.message});
-    }
-});
 
 
 router.put('/:carId', async (req, res, next) => {
     const {carId} = req.params;
     const {carName, carPrice, img,speed,mileage,fuel,option,category} = req.body;
     try{
-        const result = await carService.updateCarInfo(carId, {carName, carPrice, img,speed,mileage,fuel,option,category});
+        const result = await carService.updateCarInfo(parseInt(carId), {carName, carPrice, img,speed,mileage,fuel,option,category});
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 수정에 성공했습니다", car: result.car});
             return;
@@ -74,9 +56,9 @@ router.put('/:carId', async (req, res, next) => {
 });
 
 router.delete('/:carId', async (req, res, next) => {
-    const {carId} = req.params;
+    const {carId} =req.params;
     try {
-        const result = await carService.deleteCarInfo(carId);
+        const result = await carService.deleteCarInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
             res.status(200).json({message: "상품 정보 삭제에 성공했습니다", car: result.car});
             return;
