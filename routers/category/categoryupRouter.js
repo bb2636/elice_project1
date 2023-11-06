@@ -4,7 +4,7 @@ const router = Router();
 
 const categoryService = new CategoryService;
 
-router.post('/',validator_carup,
+router.post('/',
     async (req,res,next) => {
         try {
             const result = await categoryService.CarUp(req.body);
