@@ -36,7 +36,7 @@ export default class UserService {
             const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
 
             if(isPasswordValid) {
-                const expirationTime = Math.floor(Date.now() / 1000) + 60*60; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
+                const expirationTime = Math.floor(Date.now() / 1000) + 60*60*24; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
                 const payload = {
                     user_id: existUser.id,
                     role: existUser.role,
