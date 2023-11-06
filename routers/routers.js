@@ -12,8 +12,7 @@ import paymentRouter from "./payment/payment-router.js";
 //구매내역 라우터
 import orderRouter from "./orders/orders-router.js";
 //구매 취소 라우터
-import orderDeleteRouter from "./orders/orders-router.js";
-
+import orderDeleteRouter from "./orders/orders-delete-router.js";
 
 /* user router */
 mainRouter.use("/users", userRouter);
