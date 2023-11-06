@@ -20,17 +20,7 @@ router.get('/:carType', async (req, res, next) => {
         res.status(err.status).json({message:err.message});
     }
 });
-router.post('/categoryup', async (req, res, next) => {
-    const { carId, carType } = req.body;
-    try {
-        const result = await categoryService.CategoryUp({ carId, carType });
-        res.status(201).json({message:'category creating success',result});
-    } catch (error) {
-        console.error(error);
-        res.status(err.status);
-        res.json({ message: err.message });
-    }
-});
+
 
 router.put('/:carId', async (req, res, next) => {
     const {carId} = parseInt(req.params);
