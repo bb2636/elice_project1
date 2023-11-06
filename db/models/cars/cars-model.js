@@ -34,7 +34,7 @@ const carSchema = new Schema({
     },
     option: {
         type: String,
-        ref: 'Option'
+        required: true
     },
     category: {
         type: String,
