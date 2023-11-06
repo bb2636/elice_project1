@@ -1,5 +1,5 @@
-import CarService from "../../services/car-service";
-import {validator_carup} from "../../middlewares/validator/validator-carup";
+import CarService from "../../services/car-service.js";
+import {validator_carup} from "../../middlewares/validator/validator-carup.js";
 import {Router} from 'express';
 const router = Router();
 
