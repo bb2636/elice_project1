@@ -2,6 +2,7 @@ import express from "express";
 const mainRouter = express.Router();
 
 import carRouter from "./cars/carRouter.js";
+import optionRouter from "./cars/optionRouter.js";
 import userRouter from "./account/user-router.js";
 import signupRouter from "./account/signup-router.js";
 import signinRouter from "./account/signin-router.js";
@@ -36,6 +37,8 @@ mainRouter.use("/orders", orderDeleteRouter);
 mainRouter.use("/cars", carRouter);
 
 mainRouter.use("/category", categoryRouter);
+
+mainRouter.use("/car-options", optionRouter);
 
 //상품 등록 라우터
 mainRouter.use("/carup", carupRouter);
