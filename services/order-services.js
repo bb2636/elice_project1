@@ -53,4 +53,13 @@ async function deleteOrder(orderId) {
   }
 }
 
-export {createOrder, deleteOrder, getUserOrders, findByOrderId};
+// 주문 전체를 조회하는 함수
+async function getAllOrders() {
+  try {
+    return await Order.find({});
+  } catch (error) {
+    throw {status: 404, message: "주문을 조회하는 중 오류가 발생했습니다."};
+  }
+}
+
+export {createOrder, deleteOrder, getUserOrders, findByOrderId, getAllOrders};
