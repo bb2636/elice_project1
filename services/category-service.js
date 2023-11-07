@@ -1,4 +1,4 @@
-import { Category } from '../db/models/category/category-model.js';
+
 import { Car } from "../db/models/cars/cars-model.js";
 
 export default class CategoryService{
@@ -6,22 +6,20 @@ export default class CategoryService{
     async CategoryUp({carId, carType}){
         const category = {carId, carType};
         try{
-            const existCategory = await Category.findOne({carId:category.carId});
+            const existCategory = await category.findOne({carId:category.carId});
             if(existCategory != null){
                 return {message: "DUPLICATED"};
             }
-            const newCategory = await Category.create(category);
+            const newCategory = await category.create(category);
             return {message: "SUCCESS", category: newCategory};
         }catch(err){
             return err;
         }
     }
     //카테고리 전체조회
-    //상세조회는 필요 없나..?
     async getAllCategory(carType){
         
         try{
-           
             const allCategory = await Car.find(
                 {category : carType},
                 { carId:1, carType:1});
