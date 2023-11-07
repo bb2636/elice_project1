@@ -40,5 +40,5 @@ $ npm install
 서버 구동
 
 ```
-$ node index.js
+$ npm start
 ```

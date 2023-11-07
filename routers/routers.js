@@ -2,6 +2,7 @@ import express from "express";
 const mainRouter = express.Router();
 
 import carRouter from "./cars/carRouter.js";
+import optionRouter from "./cars/optionRouter.js";
 import userRouter from "./account/user-router.js";
 import signupRouter from "./account/signup-router.js";
 import signinRouter from "./account/signin-router.js";
@@ -15,8 +16,7 @@ import paymentRouter from "./payment/payment-router.js";
 //구매내역 라우터
 import orderRouter from "./orders/orders-router.js";
 //구매 취소 라우터
-import orderDeleteRouter from "./orders/orders-router.js";
-
+import orderDeleteRouter from "./orders/orders-delete-router.js";
 
 /* user router */
 mainRouter.use("/users", userRouter);
@@ -31,11 +31,13 @@ mainRouter.use("/payment", paymentRouter);
 //주문 내역 조회 라우터
 mainRouter.use("/orders", orderRouter);
 //주문 취소 라우터
-mainRouter.use("/orders", orderDeleteRouter);
+mainRouter.use("/orders/delete", orderDeleteRouter);
 
 mainRouter.use("/cars", carRouter);
 
 mainRouter.use("/category", categoryRouter);
+
+mainRouter.use("/car-options", optionRouter);
 
 //상품 등록 라우터
 mainRouter.use("/carup", carupRouter);

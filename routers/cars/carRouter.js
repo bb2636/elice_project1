@@ -39,9 +39,9 @@ router.get('/:carId', async (req, res, next) => {
 
 router.put('/:carId', async (req, res, next) => {
     const {carId} = req.params;
-    const {carName, carPrice, img,speed,mileage,fuel,option,category} = req.body;
+    const {carName, carPrice, img,speed,mileage,fuel,option,category, color} = req.body;
     try{
-        const result = await carService.updateCarInfo(parseInt(carId), {carName, carPrice, img,speed,mileage,fuel,option,category});
+        const result = await carService.updateCarInfo(parseInt(carId), {carName, carPrice, img,speed,mileage,fuel,option,category, color});
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 수정에 성공했습니다", car: result.car});
             return;
