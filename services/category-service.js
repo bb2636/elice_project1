@@ -30,7 +30,8 @@ export default class CategoryService{
                 { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
             if(allCategory){
                 return {message: "SUCCESS", category: allCategory};
-            }else{
+            }
+            if(allCategory.length > 0){
                 return {message: "NO_CATEGORY"};
             }
         }catch(err){
