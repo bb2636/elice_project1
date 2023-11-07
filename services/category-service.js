@@ -22,7 +22,7 @@ export default class CategoryService{
         try{
             const allCategory = await Car.find(
                 {category : carType},
-                { carId:1, carType:1});
+                { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1, color:1});
             if(allCategory){
                 return {message: "SUCCESS", category: allCategory};
             }
