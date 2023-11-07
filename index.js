@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use("/", mainRouter);
+app.use("/api", mainRouter);
 
 app.listen(port, () => {
   console.log(`서버가 정상적으로 시작되었습니다. 주소: http://localhost:${port}`);

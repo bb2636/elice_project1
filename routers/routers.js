@@ -27,7 +27,7 @@ mainRouter.use("/payment", paymentRouter);
 //주문 내역 조회 라우터
 mainRouter.use("/orders", orderRouter);
 //주문 취소 라우터
-mainRouter.use("/orders", orderDeleteRouter);
+mainRouter.use("/orders/delete", orderDeleteRouter);
 
 mainRouter.use("/cars", carRouter); // '/car' 경로로 API 엔드포인트 사용
 

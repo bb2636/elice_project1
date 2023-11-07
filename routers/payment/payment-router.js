@@ -1,25 +1,25 @@
 import express from "express";
-const router = express.Router();
 import {createOrder} from "../../services/order-services.js";
 import Order from "../../db/models/orders/order-model.js";
-// import validateOrder from "../middlewares/validator/validator-order.js";
+import mongoose from "mongoose";
 
-// 결제하기 버튼을 눌렀을 때의 응답이 성공이면 -> 주문 내역에 주문 추가(생성)
+const router = express.Router();
+
 router.post("/", async (req, res) => {
-  const {productInfo, amountInfo, userId, address, status} = req.body;
+  const {products, amountInfo, address, status, userId} = req.body;
 
-  if (!productInfo || !amountInfo || !userId || !address || !status) {
+  if (!products || !amountInfo || !address || !status || !userId) {
     return res.status(400).json({status: "400", error: "정보가 누락되었습니다."});
   }
 
   try {
-    const productObjects = products.map((product) => ({
-      productInfo: product.productInfo,
-      quantity: product.quantity || 1, // 기본값으로 1 설정
+    const productItems = products.map((product) => ({
+      productInfo: product,
+      quantity: 1,
     }));
 
     const newOrder = new Order({
-      products: productObjects,
+      products: productItems,
       totalAmount: amountInfo,
       user: userId,
       address,

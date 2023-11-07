@@ -9,12 +9,12 @@ router.delete("/:orderId", async (req, res) => {
   try {
     const result = await deleteOrder(orderId);
     if (result.status === 200) {
-      res.status(200).json(result);
+      res.status(200).json({status: "200", message: "주문이 성공적으로 취소되었습니다."});
     } else {
-      res.status(400).json(result);
+      res.status(400).json({status: "400", message: "주문을 삭제하는 중에 오류가 발생하였습니다."});
     }
   } catch (error) {
-    res.status(500).json({status: "500", message: "서버 오류"});
+    res.status(500).json({status: "500", error: error.message});
   }
 });
 
