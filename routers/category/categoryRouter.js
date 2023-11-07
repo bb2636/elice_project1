@@ -40,10 +40,10 @@ router.put('/:carType', async (req, res, next) => {
     }
 });
 
-router.delete('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+router.delete('/:carType', async (req, res, next) => {
+    const {carType} = req.params;
     try {
-        const category = await categoryService.deleteCategoryInfo(carId);
+        const result = await categoryService.deleteCategoryInfo(carType);
         if(result.message === "SUCCESS"){
             res.status(200).json({message: "카테고리 삭제에 성공했습니다", category: result.category});
             return;
