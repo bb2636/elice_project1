@@ -1,9 +1,10 @@
 import express from "express";
-const router = express.Router();
 import {createOrder} from "../../services/order-services.js";
 import Order from "../../db/models/orders/order-model.js";
-// import validateOrder from "../middlewares/validator/validator-order.js";
 
+const router = express.Router();
+
+//결제 성공하면 주문 생성 or 결제 실패
 router.post("/", async (req, res) => {
   const {products, amountInfo, address, status, userId} = req.body;
 
