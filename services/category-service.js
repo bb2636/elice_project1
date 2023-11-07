@@ -1,4 +1,5 @@
-import {Category} from '../db/models/category/category-model.js';
+import { Category } from '../db/models/category/category-model.js';
+import { Car } from "../db/models/cars/cars-model.js";
 
 export default class CategoryService{
     //카테고리 등록
@@ -21,7 +22,7 @@ export default class CategoryService{
         
         try{
            
-            const allCategory = await Category.find(
+            const allCategory = await Car.find(
                 {category : carType},
                 { carId:1, carType:1});
             if(allCategory){
