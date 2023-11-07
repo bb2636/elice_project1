@@ -20,23 +20,12 @@ router.get('/:carType', async (req, res, next) => {
         res.status(err.status).json({message:err.message});
     }
 });
-router.post('/categoryup', async (req, res, next) => {
-    const { carId, carType } = req.body;
-    try {
-        const result = await categoryService.CategoryUp({ carId, carType });
-        res.status(201).json({message:'category creating success',result});
-    } catch (error) {
-        console.error(error);
-        res.status(err.status);
-        res.json({ message: err.message });
-    }
-});
 
-router.put('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+
+router.put('/:carType', async (req, res, next) => {
     const { carType } = req.body; //id는 수정안함
     try {
-        const result = await categoryService.updateCategoryInfo(carId, carType);
+        const result = await categoryService.updateCategoryInfo(parseInt(carId), carType);
         if(result.message = "SUCCESS"){
             res.status(201).json({message:'상품 등록 성공', category: result.category});
         }else if(result.message === "DUPLICATED"){
@@ -51,10 +40,10 @@ router.put('/:carId', async (req, res, next) => {
     }
 });
 
-router.delete('/:carId', async (req, res, next) => {
-    const {carId} = parseInt(req.params);
+router.delete('/:carType', async (req, res, next) => {
+    const {carType} = req.params;
     try {
-        const category = await categoryService.deleteCategoryInfo(carId);
+        const category = await categoryService.deleteCategoryInfo(carType);
         if(result.message === "SUCCESS"){
             res.status(200).json({message: "카테고리 삭제에 성공했습니다", category: result.category});
             return;
