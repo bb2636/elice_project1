@@ -2,12 +2,10 @@ import { Car } from '../db/models/cars/cars-model.js';
 
 export default class CarService {
     //상품 등록
-    async CarUp({carName, carPrice, img,speed,mileage,fuel,carId,option,category}) {
-        const car = await Car.create({carName, carPrice, img,speed,mileage,fuel,carId,option,category});
+    async CarUp({carName, carPrice, img,speed,mileage,fuel,carId,option,category, color}) {
+
+        const car = {carName, carPrice, img,speed,mileage,fuel,carId,option,category, color};
         try{
-            if(!carName || !carPrice || !img || !speed || !mileage || !fuel || !carId){
-                return {message : "MISSING_FIELD"}
-            }
             const existCar = await Car.findOne({carId: car.carId});
             if(existCar != null){
                 return {message: "DUPLICATED"}; //carId중복
@@ -22,7 +20,7 @@ export default class CarService {
     async getAllCarsInfo() {
         try {
             const allCars = await Car.find({}, 
-                { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
+                { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1, color:1});
             if(allCars) {
                 return { message: "SUCCESS", car :allCars };
             } else {
@@ -37,7 +35,7 @@ export default class CarService {
         try{
             const matchCar = await Car.findOne(
                 {carId:carId},
-                {carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
+                {carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1, color:1});
             if(matchCar){
                 return {message:"SUCCESS", car: matchCar};
             }else{ return {message: "NO_MATCHES"};}
@@ -50,7 +48,7 @@ export default class CarService {
         try{
             const updateCar = await Car.findOneAndUpdate(
                 {carId:carId},
-                {carName: data.carName, carPrice:data.carPrice, img: data.img, speed: data.speed, mileage: data.mileage, fuel: data.fuel, option: data.option, category: data.category,},
+                {carName: data.carName, carPrice:data.carPrice, img: data.img, speed: data.speed, mileage: data.mileage, fuel: data.fuel, option: data.option, category: data.category, color: data.color},
                 {new: true});
             if(updateCar){
                 return {message: "SUCCESS", car: updateCar};
