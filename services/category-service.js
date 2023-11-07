@@ -1,14 +1,11 @@
-import Category from '../db/models/category/category-model.js';
-import { Car } from '../db/models/cars/cars-model.js';
+import { Category } from '../db/models/category/category-model.js';
+import { Car } from "../db/models/cars/cars-model.js";
 
 export default class CategoryService{
     //카테고리 등록
     async CategoryUp({carId, carType}){
         const category = {carId, carType};
         try{
-            if(!carId || !carType){
-                return {message: "MISSING_FIELD"};
-            }
             const existCategory = await Category.findOne({carId:category.carId});
             if(existCategory != null){
                 return {message: "DUPLICATED"};
@@ -25,14 +22,14 @@ export default class CategoryService{
         
         try{
            
-            const allCategory = await Category.find(
+            const allCategory = await Car.find(
                 {category : carType},
-                { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
+                { carId:1, carType:1});
             if(allCategory){
                 return {message: "SUCCESS", category: allCategory};
             }
             if(allCategory.length > 0){
-                return {message: "NO_CATEGORY"};
+                return {message: "NO_MATCHES"};
             }
         }catch(err){
             return err;

@@ -23,12 +23,11 @@ router.get('/:carType', async (req, res, next) => {
 
 
 router.put('/:carId', async (req, res, next) => {
-    const {carId} = req.params;
     const { carType } = req.body; //id는 수정안함
     try {
         const result = await categoryService.updateCategoryInfo(parseInt(carId), carType);
         if(result.message = "SUCCESS"){
-            res.status(201).json({message:'상품 등록 성공', category: result.category});
+            res.status(201).json({message:'카테고리 등록 성공', category: result.category});
         }else if(result.message === "DUPLICATED"){
             throw {status:400, message: "이미 등록된 상품아이디 입니다"};
         }else if(result.message === "MISSING_FIELD"){
@@ -44,7 +43,7 @@ router.put('/:carId', async (req, res, next) => {
 router.delete('/:carId', async (req, res, next) => {
     const {carId} = req.params;
     try {
-        const category = await categoryService.deleteCategoryInfo(parseInt(carId));
+        const result = await categoryService.deleteCategoryInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
             res.status(200).json({message: "카테고리 삭제에 성공했습니다", category: result.category});
             return;
