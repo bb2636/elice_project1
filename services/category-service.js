@@ -25,7 +25,7 @@ export default class CategoryService{
         
         try{
            
-            const allCategory = await Car.find(
+            const allCategory = await Category.find(
                 {category : carType},
                 { carName:1, carPrice:1, img:1, speed:1 ,mileage:1 ,fuel:1 ,carId:1 ,option:1, category:1});
             if(allCategory){
