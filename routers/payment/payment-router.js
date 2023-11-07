@@ -1,13 +1,10 @@
 import express from "express";
 import {createOrder} from "../../services/order-services.js";
 import Order from "../../db/models/orders/order-model.js";
-import mongoose from "mongoose";
 
 const router = express.Router();
-import {createOrder} from "../../services/order-services.js";
-import Order from "../../db/models/orders/order-model.js";
-// import validateOrder from "../middlewares/validator/validator-order.js";
 
+//결제 성공하면 주문 생성 or 결제 실패
 router.post("/", async (req, res) => {
   const {products, amountInfo, address, status, userId} = req.body;
 
