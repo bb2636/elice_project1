@@ -7,7 +7,7 @@ const categoryService = new CategoryService;
 router.post('/',
     async (req,res,next) => {
         try {
-            const result = await categoryService.CarUp(req.body);
+            const result = await categoryService.CategoryUp(req.body);
             if(result.message = "SUCCESS"){
                 res.status(201).json({message:'카테고리 등록 성공', car: result.car});
             }else if(result.message === "DUPLICATED"){

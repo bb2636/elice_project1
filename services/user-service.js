@@ -50,6 +50,7 @@ export default class UserService {
                     message : "SUCCESS", 
                     user: {
                         email: existUser.email,
+                        shortId : existUser.shortId,
                     },
                     token: token,
                 }
