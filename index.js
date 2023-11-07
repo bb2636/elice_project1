@@ -33,6 +33,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+// static file serving
+app.use('/images', express.static('public/assets/cars/'));
+
 app.use("/api", mainRouter);
 
 app.listen(port, () => {

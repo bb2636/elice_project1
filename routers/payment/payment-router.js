@@ -4,6 +4,9 @@ import Order from "../../db/models/orders/order-model.js";
 import mongoose from "mongoose";
 
 const router = express.Router();
+import {createOrder} from "../../services/order-services.js";
+import Order from "../../db/models/orders/order-model.js";
+// import validateOrder from "../middlewares/validator/validator-order.js";
 
 router.post("/", async (req, res) => {
   const {products, amountInfo, address, status, userId} = req.body;

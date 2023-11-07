@@ -21,7 +21,7 @@ router.get("/",
                 res.status(200)
                    .json({
                         message: "전체 회원 정보 조회에 성공했습니다.",
-                        user: result.users,
+                        users: result.users,
                     });
                 return;
             } else {
