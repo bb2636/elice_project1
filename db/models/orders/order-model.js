@@ -17,7 +17,7 @@ const orderSchema = new Schema({
     type: Number,
     required: true,
   },
-  user: {
+  userId: {
     type: String,
     required: true,
   },
@@ -28,6 +28,7 @@ const orderSchema = new Schema({
   status: {
     type: String,
     required: true,
+    default: "주문 완료",
   },
 });
 

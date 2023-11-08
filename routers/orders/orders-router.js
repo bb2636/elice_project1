@@ -1,5 +1,7 @@
 import express from "express";
-import {getUserOrders, getAllOrders} from "../../services/order-services.js";
+import Order from "../../db/models/orders/order-model.js";
+import {Car} from "../../db/models/cars/cars-model.js";
+import {getAllOrders} from "../../services/order-services.js";
 
 const router = express.Router();
 
@@ -10,8 +12,11 @@ router.get("/:userId", async (req, res) => {
     return res.status(404).json({status: "404", message: "주문자 정보를 찾을 수 없습니다."});
   }
   try {
-    const orders = await getUserOrders(userId);
-
+    const orders = await Order.find({userId}).populate({
+      path: "products.productInfo",
+      model: Car,
+      select: "carName carPrice option color img",
+    });
     if (orders.length > 0) {
       res.status(200).json({status: "200", message: "주문 내역을 가져오는데 성공했습니다.", orders});
     } else {
