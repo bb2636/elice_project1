@@ -1,12 +1,8 @@
-import CarService from "../../services/car-service.js";
-import {validator_carup} from "../../middlewares/validator/validator-carup.js";
-import {Router} from 'express';
+import { Router } from 'express';
+const router = Router();
 
 import multer from 'multer';
 import path from "path";
-
-const router = Router();
-const carService = new CarService;
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -18,21 +14,19 @@ const storage = multer.diskStorage({
         cb(null, filename + '-' + Date.now() + extname); // 저장할 파일명을 설정합니다. 이 예제에서는 파일명에 타임스탬프를 추가합니다.
     }
 });
+
 const upload = multer({ storage: storage });
 
+// 업로드 요청
 router.post('/',
     upload.single('file'),
-    validator_carup,
-    async (req,res,next) => {
-        try {
-            const result = await carService.CarUp(req.body, req.file.filename);
-            if(result.message = "SUCCESS"){
-                res.status(201).json({message:'상품 등록 성공', car: result.car});
-            }else if(result.message === "DUPLICATED"){
-                throw {status:400, message: "이미 등록된 상품아이디 입니다"};
-            }
-        } catch (err) {
-            res.status(err.status).json({message:err.message});
-        }
-    });
+    async(req, res, next) => {
+        const { carName, carPrice, carId, mileage, fule, option, category, color} = req.body;
+        res.json({
+            message:"success",
+            file: req.file,
+            car: { carName, carPrice, carId, mileage, fule, option, category, color, img:`/images/${req.file.filename}`} });        
+    }
+);
+
 export default router;
