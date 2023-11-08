@@ -1,31 +1,28 @@
 import { Router } from 'express';
-import multer from 'multer';
-import UploadService from '../../services/upload-service.js';
-
-const uploadService = new UploadService;
 const router = Router();
 
-// 업로드 요청
-router.post('/upload',
-    async(req, res, next) => {
-        try {
-            
-            const result = await uploadService.uploadAndGetURL(req.file);
-            // res.json(result);
-            // return;
-            if (err instanceof multer.MulterError) {
-                // Multer에서 발생한 오류 처리
-                res.status(500).json(err);
-            } else if (err) {
-                // 그 외의 오류 처리
-                res.status(500).json(err);
-            }
+import multer from 'multer';
+import path from "path";
 
-            res.status(200).json('File uploaded successfully');
-            
-        } catch (err) {
-            res.status(err.status).json({message:err.message});
-        }
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'public/assets/cars/'); // 업로드된 파일이 저장될 경로를 지정합니다.
+    },
+    filename: function(req, file, cb) {
+        const extname = path.extname(file.originalname); // 원본 파일의 확장자를 가져옵니다.
+       const filename = file.originalname.replace(extname, '').toLowerCase(); // 파일명을 설정합니다. 여기서는 확장자를 제외하고 소문자로 변환합니다.
+        cb(null, filename + '-' + Date.now() + extname); // 저장할 파일명을 설정합니다. 이 예제에서는 파일명에 타임스탬프를 추가합니다.
+    }
+});
+  
+const upload = multer({ storage: storage });
+
+// 업로드 요청
+router.post('/',
+    upload.single('file'),
+    async(req, res, next) => {
+
+        res.json({message:"success", file: req.file});        
     }
 );
 
