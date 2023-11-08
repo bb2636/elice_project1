@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.post('/',
+router.post("/",
     upload.single('file'),
     validator_carup,
     async (req,res,next) => {
@@ -34,5 +34,7 @@ router.post('/',
         } catch (err) {
             res.status(err.status).json({message:err.message});
         }
-    });
+    }
+);
+
 export default router;

@@ -3,7 +3,7 @@ import { Car } from '../db/models/cars/cars-model.js';
 export default class CarService {
     //상품 등록
     async CarUp({carName, carPrice, speed,mileage,fuel,carId,option,category, color}, filename) {
-        const car = {carName, carPrice, img:filename, speed, mileage, fuel, carId, option, category, color};
+        const car = {carName, carPrice, img:`/images/${filename}`, speed, mileage, fuel, carId, option, category, color};
         const existCar = await Car.findOne({carId: car.carId});
         if(existCar != null){
             throw {message: "DUPLICATED"}; //carId중복
