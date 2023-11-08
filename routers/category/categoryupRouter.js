@@ -13,8 +13,6 @@ router.post('/',validator_categoryup,
                 res.status(201).json({message:'카테고리 등록 성공', car: result.car});
             }else if(result.message === "DUPLICATED"){
                 throw {status:400, message: "이미 등록된 상품아이디 입니다"};
-            }else{
-                throw {status:404, message: "unknown error"};
             }
         } catch (err) {
             res.status(err.status).json({message:err.message});

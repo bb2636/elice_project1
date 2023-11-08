@@ -13,8 +13,6 @@ router.get('/:carType', async (req, res, next) => {
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status:404, message: "존재하지 않는 카테고리입니다"};
-        }else{
-            throw {status:404, message: "unknown error"};
         }
     }catch (err) {
         res.status(err.status).json({message:err.message});
@@ -32,8 +30,6 @@ router.put('/:carId', async (req, res, next) => {
             throw {status:400, message: "이미 등록된 상품아이디 입니다"};
         }else if(result.message === "MISSING_FIELD"){
             throw {status:400, message: "상품아이디와 타입은 필수 요청 값입니다"};
-        }else{
-            throw {status:404, message: "unknown error"};
         }
     } catch (err) {
         res.status(err.status).json({message:err.message});
@@ -49,8 +45,6 @@ router.delete('/:carId', async (req, res, next) => {
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status: 404, message: "존재하지 않는 카테고리입니다"};
-        }else{
-            throw {status: 404, message: "unknown eror"}
         }
     } catch(err){
         res.status(err.status).json({message:err.message});

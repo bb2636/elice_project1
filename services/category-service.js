@@ -13,7 +13,7 @@ export default class CategoryService{
             const newCategory = await category.create(category);
             return {message: "SUCCESS", category: newCategory};
         }catch(err){
-            return err;
+            throw err;
         }
     }
     //카테고리 전체조회
@@ -30,7 +30,7 @@ export default class CategoryService{
                 return {message: "NO_MATCHES"};
             }
         }catch(err){
-            return err;
+            throw err;
         }
     }
     //카테고리 수정
@@ -46,7 +46,7 @@ export default class CategoryService{
                 return {message: "NO_MATCHES"};
             }
         }catch(err){
-            return err;
+            throw err;
         }
     }
     //카테고리 삭제
@@ -59,7 +59,7 @@ export default class CategoryService{
                 return {message: "NO_MATCHES"};
             }
         }catch(err){
-            return err;
+            throw err;
         }
     }
 }

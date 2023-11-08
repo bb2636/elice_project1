@@ -13,7 +13,7 @@ export default class CarService {
             const newCar = await Car.create(car);
             return {message : "SUCCESS", car: newCar};
         }catch(err){
-            return err;
+            throw err;
         }
     }
     //전체 상품 조회
@@ -27,7 +27,7 @@ export default class CarService {
                 return { message: "NO_CARS", };
             }
         } catch(err) {
-            return err;
+            throw err;
         }
     }
     //상품 상세 조회
@@ -40,7 +40,7 @@ export default class CarService {
                 return {message:"SUCCESS", car: matchCar};
             }else{ return {message: "NO_MATCHES"};}
         }catch(err){
-            return err;
+            throw err;
         }
     }
     //상품 수정
@@ -56,7 +56,7 @@ export default class CarService {
                 return {message: "NO_MATCHES"};
             }
         }catch(err){
-            return err;
+            throw err;
         }
     }
     //상품 삭제
@@ -69,7 +69,7 @@ export default class CarService {
                 return {message: "NO_MATCHES"};
             }
         }catch(err){
-            return err;
+            throw err;
         }
     }
 }

@@ -11,8 +11,6 @@ router.get('/', async(req,res,next)=>{
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 전체 조회 성공",car: result.car});
             return;
-        }else{
-            throw {status: 404, message: 'unknown error'};
         }
     }catch (err) {
         res.status(err.status).json({message:err.message});
@@ -28,8 +26,6 @@ router.get('/:carId', async (req, res, next) => {
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status:404, message: "존재하지 않는 상품입니다"};
-        }else{
-            throw {status:404, message: "unknown error"};
         }
     }catch (err) {
         res.status(err.status).json({message:err.message});
@@ -47,8 +43,6 @@ router.put('/:carId', async (req, res, next) => {
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status: 404, message: "존재하지 않는 상품입니다"};
-        }else{
-            throw {status: 404, message: "unknown error"};
         }
     }catch (err) {
         res.status(err.status).json({message:err.message});
@@ -64,8 +58,6 @@ router.delete('/:carId', async (req, res, next) => {
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status: 404, message: "존재하지 않는 상품입니다"};
-        }else{
-            throw {status: 404, message: "unknown eror"}
         }
     }catch (err) {
         res.status(err.status).json({message:err.message});
