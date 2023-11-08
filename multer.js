@@ -6,12 +6,11 @@ const app = express();
 
 const _storage = multer.diskStorage({
   destination: function (req,file,cb){
-    cb(null, 'public/assets/cars/');
-    //파일저장경로
+    cb(null, 'public/assets/cars/'); //파일저장경로
   },
   filename: function(req, file, cb) {
     const extname = path.extname(file.originalname); // 원본 파일의 확장자를 가져옵니다.
-   const filename = file.originalname.replace(extname, '').toLowerCase(); // 파일명을 설정합니다. 여기서는 확장자를 제외하고 소문자로 변환합니다.
+    const filename = file.originalname.replace(extname, '').toLowerCase(); // 파일명을 설정합니다. 여기서는 확장자를 제외하고 소문자로 변환합니다.
     cb(null, filename + '-' + Date.now() + extname); // 저장할 파일명을 설정합니다. 이 예제에서는 파일명에 타임스탬프를 추가합니다.
 }
 });
