@@ -18,9 +18,6 @@ import orderRouter from "./orders/orders-router.js";
 //구매 취소 라우터
 import orderDeleteRouter from "./orders/orders-delete-router.js";
 
-// 이미지 업로드 라우터
-import uploadRouter from "./upload/upload-router.js";
-
 /* user router */
 mainRouter.use("/users", userRouter);
 
@@ -47,8 +44,5 @@ mainRouter.use("/carup", carupRouter);
 
 //카테고리 등록 라우터
 mainRouter.use("/categoryup", categoryupRouter);
-
-//이미지 업로드 라우터
-mainRouter.use("/upload", uploadRouter);
 
 export default mainRouter;
