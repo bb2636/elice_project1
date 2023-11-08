@@ -20,14 +20,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-
-
 router.post('/',
     upload.single('file'),
     validator_carup,
     async (req,res,next) => {
         try {
-            const result = await carService.CarUp(req.body);
+            const result = await carService.CarUp(req.body, req.file.filename);
             if(result.message = "SUCCESS"){
                 res.status(201).json({message:'상품 등록 성공', car: result.car});
             }else if(result.message === "DUPLICATED"){
