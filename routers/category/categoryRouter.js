@@ -45,7 +45,7 @@ router.delete('/:carId', async (req, res, next) => {
     try {
         const result = await categoryService.deleteCategoryInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
-            res.status(200).json({message: "카테고리 삭제에 성공했습니다", category: result.category});
+            res.status(204).json({message: "카테고리 삭제에 성공했습니다", category: result.category});
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status: 404, message: "존재하지 않는 카테고리입니다"};
