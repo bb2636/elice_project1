@@ -7,59 +7,52 @@ export default class UserService {
     async Signup({userName, email, password, role = "USER"}) {
         const user = {userName, email, password, role};
 
-        try {
-            const existUser = await User.findOne( {email: user.email} );
-            if(existUser!==null) {
-                return { message : "DUPLICATED"};
-            } 
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(user.password, salt);
-            user.password = hash;
-            const newUser = await User.create(user);
-            return { message : "SUCCESS", user: newUser};
-        } catch(err) {
-            return err;
-        }
+        const existUser = await User.findOne( {email: user.email} );
+        if(existUser !== null) {
+            throw { message : "DUPLICATED"};
+        } 
+        
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password, salt);
+        
+        user.password = hash;
+        const newUser = await User.create(user);
+        return { message : "SUCCESS", user: newUser};
     }
 
     async Signin (user) {
 
-        try {
-            const existUser = await User.findOne( {email: user.email} );
+        const existUser = await User.findOne( {email: user.email} );
 
-            if(!existUser) {
-                return { message : "NOT_EXIST_USER"};
-            }
+        if(!existUser) {
+            throw { message : "NOT_EXIST_USER"};
+        }
 
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(user.password, salt);
-            const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password, salt);
+        const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
 
-            if(isPasswordValid) {
-                const expirationTime = Math.floor(Date.now() / 1000) + 60*60*24; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
-                const payload = {
-                    user_id: existUser.id,
-                    role: existUser.role,
-                    exp: expirationTime,
-                }
-                const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-                const token = jwt.sign(payload, secretKey);
-                // jwt.sign 시 첫번째 인자에 exp 키로 만료 시간을 설정할 수 있다.
+        if(!isPasswordValid) {
+            throw { message : "NOT_MATCHED" };
+        }
+        
+        const expirationTime = Math.floor(Date.now() / 1000) + 60*60*24; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
+        const payload = {
+            user_id: existUser.id,
+            role: existUser.role,
+            exp: expirationTime,
+        }
+        const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+        const token = jwt.sign(payload, secretKey);
+        // jwt.sign 시 첫번째 인자에 exp 키로 만료 시간을 설정할 수 있다.
 
-                return { 
-                    message : "SUCCESS", 
-                    user: {
-                        email: existUser.email,
-                        shortId : existUser.shortId,
-                    },
-                    token: token,
-                }
-            } else {
-                throw { message : "NOT_MATCHED" };
-            }
-            
-        } catch(err) {
-            return err;
+        return { 
+            message : "SUCCESS", 
+            user: {
+                email: existUser.email,
+                shortId : existUser.shortId,
+            },
+            token: token,
         }
     }
 
