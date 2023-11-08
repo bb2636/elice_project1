@@ -58,91 +58,68 @@ export default class UserService {
 
     async Signout (userToken) {
         // 만료 시킨 토큰을 반환
-        try {
-            const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-            const jwtDecoded = jwt.verify(userToken, secretKey);
-            const newExp = Math.floor(Date.now() / 1000) - 1;
-            // return jwtDecoded;
-            const payload = {
-                user_id: jwtDecoded.user_id,
-                role: jwtDecoded.role,
-                exp: newExp,
-            }
+        const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+        const jwtDecoded = jwt.verify(userToken, secretKey);
+        const newExp = Math.floor(Date.now() / 1000) - 1;
+        
+        const payload = {
+            user_id: jwtDecoded.user_id,
+            role: jwtDecoded.role,
+            exp: newExp,
+        }
 
-            const expiredToken = jwt.sign(payload, secretKey);
+        const expiredToken = jwt.sign(payload, secretKey);
 
-            return { 
-                message : "SUCCESS", 
-                token: expiredToken,
-            }
-            
-        } catch(err) {
-            return err;
+        return { 
+            message : "SUCCESS", 
+            token: expiredToken,
         }
     }
 
     async getUserInfo (shortId) {
 
-        try {
-            const matchedUser = await User.findOne( 
-                { shortId: shortId }, 
-                { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
-            // return matchedUser;
-            if(matchedUser) {
-                return { message: "SUCCESS", user: matchedUser};
-            } else {
-                throw { message: "NO_MATCHES", };
-            }
-            
-        } catch(err) {
-            return err;
+        const matchedUser = await User.findOne( 
+            { shortId: shortId }, 
+            { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
+        
+        if(!matchedUser) {
+            throw { message: "NO_MATCHES", };
         }
+        
+        return { message: "SUCCESS", user: matchedUser};
     }
 
     async updateUserInfo (shortId, data) {
 
-        try {
-            const matchedUser = await User.findOneAndUpdate( 
-                { shortId: shortId }, 
-                { userName: data.userName, age: data.age, phone: data.phone, address:data.address, },
-                { new: true } );
-            if(matchedUser) {
-                return { message: "SUCCESS", user: matchedUser};
-            } else {
-                throw { message: "NO_MATCHES", };
-            }
-        } catch(err) {
-            return err;
+        const matchedUser = await User.findOneAndUpdate( 
+            { shortId: shortId }, 
+            { userName: data.userName, age: data.age, phone: data.phone, address:data.address, },
+            { new: true } );
+        
+        if(!matchedUser) {
+            throw { message: "NO_MATCHES", };
         }
+        
+        return { message: "SUCCESS", user: matchedUser};
     }
 
     async deleteUserInfo (shortId) {
 
-        try {
-            const deletedUser = await User.findOneAndDelete( 
-                { shortId: shortId });
-            //return deletedUser //조건에 맞지 않으면 null을 반환
-            if(deletedUser) {
-                return { message: "SUCCESS", };
-            } else {
-                throw { message: "NO_MATCHES", };
-            }
-        } catch(err) {
-            return err;
+        const deletedUser = await User.findOneAndDelete( 
+            { shortId: shortId });
+        //return deletedUser //조건에 맞지 않으면 null을 반환
+        
+        if(!deletedUser) {
+            throw { message: "NO_MATCHES", };
         }
+        return { message: "SUCCESS", };
     }
 
     async getAllUsersInfo () {
-        try {
-            const allUsers = await User.find({}, 
-                { userName: 1, email: 1 ,age:1, phone: 1, address:1, role:1, orderList:1, });
-            if(allUsers) {
-                return { message: "SUCCESS", users:allUsers };
-            } else {
-                throw { message: "NO_USERS", };
-            }
-        } catch(err) {
-            return err;
-        }
+        
+        const allUsers = await User.find({}, 
+            { userName: 1, email: 1 ,age:1, phone: 1, address:1, role:1, orderList:1, });
+        
+        return { message: "SUCCESS", users:allUsers };
     }
 }
