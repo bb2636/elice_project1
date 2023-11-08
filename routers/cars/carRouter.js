@@ -60,7 +60,7 @@ router.delete('/:carId', async (req, res, next) => {
     try {
         const result = await carService.deleteCarInfo(parseInt(carId));
         if(result.message === "SUCCESS"){
-            res.status(200).json({message: "상품 정보 삭제에 성공했습니다", car: result.car});
+            res.status(204).json({message: "상품 정보 삭제에 성공했습니다", car: result.car});
             return;
         }else if(result.message === "NO_MATCHES"){
             throw {status: 404, message: "존재하지 않는 상품입니다"};
