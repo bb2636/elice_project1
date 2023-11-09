@@ -6,7 +6,7 @@ import {login_required} from "../../middlewares/auth/login-required.js";
 const router = express.Router();
 
 // 결제 성공하면 주문 생성 or 결제 실패
-router.post("/", validator_createOrder, login_required, async (req, res) => {
+router.post("/", login_required, validator_createOrder, async (req, res) => {
   const {address, userId} = req.body;
   const products = req.body.products;
 

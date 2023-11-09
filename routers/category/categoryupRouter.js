@@ -1,11 +1,12 @@
 import CategoryService from "../../services/category-service.js";
+import { validator_admin } from "../../middlewares/validator/validator-admin.js";
 import {validator_categoryup} from "../../middlewares/validator/validator-categoryup.js";
 import {Router} from 'express';
 const router = Router();
 
 const categoryService = new CategoryService;
 
-router.post('/',validator_categoryup,
+router.post('/', validator_admin, validator_categoryup,
     async (req,res,next) => {
         try {
             const result = await categoryService.CategoryUp(req.body);
