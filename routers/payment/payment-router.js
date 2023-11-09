@@ -1,10 +1,11 @@
 import express from "express";
+import { login_required } from "../../middlewares/auth/login-required.js";
 import {createOrdered, productMissing, orderNumbers} from "../../services/order-services.js";
 
 const router = express.Router();
 
 // 결제 성공하면 주문 생성 or 결제 실패
-router.post("/", async (req, res) => {
+router.post("/", login_required, async (req, res) => {
   const {products, address, userId} = req.body;
 
   for (const product of products) {
