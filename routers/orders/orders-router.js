@@ -2,14 +2,15 @@ import express from "express";
 import Order from "../../db/models/orders/order-model.js";
 import {Car} from "../../db/models/cars/cars-model.js";
 import {getAllOrders} from "../../services/order-services.js";
+import {validator_getUserOrders, validator_getAllOrders} from "../../middlewares/validator/validator-order.js";
 import { validator_admin } from "../../middlewares/validator/validator-admin.js";
 import { login_required } from "../../middlewares/auth/login-required.js";
 
 const router = express.Router();
 
 // 특정 유저의 주문 내역 가져오기
-router.get("/:userId", login_required, async (req, res) => {
-  const userId = req.params.userId;
+router.get("/:userId", login_required, validator_getUserOrders, async (req, res) => {
+  const userId = req.query.userId;
   if (!userId) {
     return res.status(404).json({status: "404", message: "주문자 정보를 찾을 수 없습니다."});
   }
@@ -30,7 +31,7 @@ router.get("/:userId", login_required, async (req, res) => {
 });
 
 // 주문 전체 조회 라우터
-router.get("/", validator_admin, async (req, res) => {
+router.get("/", validator_admin, validator_getAllOrders, , async (req, res) => {
   try {
     const allOrders = await getAllOrders();
     res.status(200).json({status: "200", message: "전체 주문 내역 조회에 성공하였습니다.", allOrders});
