@@ -1,10 +1,9 @@
 import express from "express";
 import Order from "../../db/models/orders/order-model.js";
-import {Car} from "../../db/models/cars/cars-model.js";
 import {getAllOrders} from "../../services/order-services.js";
 import {validator_getUserOrders, validator_getAllOrders} from "../../middlewares/validator/validator-order.js";
-import { validator_admin } from "../../middlewares/validator/validator-admin.js";
-import { login_required_by_user_id } from "../../middlewares/auth/login-required-by-user-id.js";
+import {validator_admin} from "../../middlewares/validator/validator-admin.js";
+import {login_required_by_user_id} from "../../middlewares/auth/login-required-by-user-id.js";
 
 const router = express.Router();
 
@@ -28,11 +27,11 @@ router.get("/:userId", login_required_by_user_id, validator_getUserOrders, async
 
   try {
     const orders = await Order.find({userId});
-    // .populate({
+    // const orders = await Order.find({userId}).populate({
     //   path: "products.productInfo",
     //   model: Car,
     //   select: "carName carPrice option color img",
-    // });
+    // })
     if (orders.length > 0) {
       res.status(200).json({status: "200", message: "주문 내역을 가져오는데 성공했습니다.", orders});
     } else {

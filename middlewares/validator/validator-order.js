@@ -15,7 +15,6 @@ async function validator_createOrder(req, res, next) {
     res.status(400).json({status: "400", error: "주문자 정보가 누락되었습니다."});
     return;
   }
-
   next();
 }
 
@@ -38,9 +37,9 @@ async function validator_getAllOrders(req, res, next) {
 
 // 삭제 validator
 async function validator_deleteOrder(req, res, next) {
-  const {userId} = req.params;
-  if (!userId) {
-    res.status(400).json({status: "400", error: "유효하지 않은 id입니다."});
+  const {orderNumber} = req.params;
+  if (!orderNumber) {
+    res.status(400).json({status: "400", error: "유효하지 않은 주문 번호입니다."});
     return;
   }
   next();

@@ -1,7 +1,7 @@
 import express from "express";
 import {createOrdered} from "../../services/order-services.js";
 import {validator_createOrder} from "../../middlewares/validator/validator-order.js";
-import { login_required_by_user_id } from "../../middlewares/auth/login-required-by-user-id.js";
+import {login_required_by_user_id} from "../../middlewares/auth/login-required-by-user-id.js";
 
 const router = express.Router();
 
