@@ -8,16 +8,17 @@ const router = express.Router();
 
 // 특정 유저의 주문 내역 가져오기
 router.get("/:userId", validator_getUserOrders, async (req, res) => {
-  const userId = req.query.userId;
+  const userId = req.params.userId;
   if (!userId) {
     return res.status(404).json({status: "404", message: "주문자 정보를 찾을 수 없습니다."});
   }
   try {
-    const orders = await Order.find({userId}).populate({
-      path: "products.productInfo",
-      model: Car,
-      select: "carName carPrice option color img",
-    });
+    const orders = await Order.find({userId});
+    // const orders = await Order.find({userId}).populate({
+    //   path: "products.productInfo",
+    //   model: Car,
+    //   select: "carName carPrice option color img",
+    // })
     if (orders.length > 0) {
       res.status(200).json({status: "200", message: "주문 내역을 가져오는데 성공했습니다.", orders});
     } else {

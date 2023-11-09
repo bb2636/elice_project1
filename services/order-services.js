@@ -45,16 +45,9 @@ async function getAllOrders() {
 }
 
 // 총 금액 계산 함수
-async function calculateTotalPrice(products) {
-  const carInfoPromises = products.map(async (product) => {
-    const carInfo = await Car.findById(product.carId);
-    return carInfo;
-  });
-
-  const carInfos = await Promise.all(carInfoPromises);
-
-  const totalPrice = carInfos.reduce((total, carInfo) => {
-    return total + carInfo.carPrice;
+function calculateTotalPrice(products) {
+  const totalPrice = products.reduce((total, product) => {
+    return total + parseInt(product.carPrice, 10);
   }, 0);
 
   return totalPrice;
@@ -64,24 +57,18 @@ async function calculateTotalPrice(products) {
 async function createOrdered(products, userId, address) {
   const orderNumber = orderNumbers();
 
-  const productItems = await Promise.all(
-    products.map(async (product) => {
-      const carInfo = await Car.findById(product.carId);
-
-      if (carInfo) {
-        return {
-          productInfo: {
-            carId: carInfo.carId,
-            carName: carInfo.carName,
-            img: carInfo.img,
-            carPrice: carInfo.carPrice,
-            option: carInfo.option,
-            color: carInfo.color,
-          },
-        };
-      }
-    })
-  );
+  const productItems = products.map((product) => {
+    return {
+      productInfo: {
+        carId: product.carId,
+        carName: product.carName,
+        img: product.img,
+        carPrice: product.carPrice,
+        option: product.option,
+        color: product.color,
+      },
+    };
+  });
 
   const totalPrice = await calculateTotalPrice(products);
 

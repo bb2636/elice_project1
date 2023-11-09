@@ -7,6 +7,7 @@ async function validator_createOrder(req, res, next) {
   for (const product of products) {
     if (!product.carId || productMissing(product)) {
       res.status(400).json({status: "400", error: "제품 정보가 누락되었습니다."});
+      console.log(product);
       return;
     }
   }
