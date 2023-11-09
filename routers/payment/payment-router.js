@@ -1,17 +1,14 @@
 import express from "express";
-import {createOrdered, productMissing, orderNumbers} from "../../services/order-services.js";
+import {createOrdered} from "../../services/order-services.js";
+import {validator_createOrder} from "../../middlewares/validator/validator-order.js";
+import {login_required} from "../../middlewares/auth/login-required.js";
 
 const router = express.Router();
 
 // 결제 성공하면 주문 생성 or 결제 실패
-router.post("/", async (req, res) => {
-  const {products, address, userId} = req.body;
-
-  for (const product of products) {
-    if (!product.carId || productMissing(product)) {
-      return res.status(400).json({status: "400", error: "제품 정보가 누락되었습니다."});
-    }
-  }
+router.post("/", validator_createOrder, login_required, async (req, res) => {
+  const {address, userId} = req.body;
+  const products = req.body.products;
 
   try {
     const orderNumber = await createOrdered(products, userId, address);
