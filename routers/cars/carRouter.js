@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import CarService from '../../services/car-service.js';
+import { validator_admin } from "../../middlewares/validator/validator-admin.js";
 const carService = new CarService;
 const router = Router();
 //에러처리는 일단 router, service 다 수정해보고 next(err)로 바꿔보기..
@@ -43,8 +44,8 @@ router.get('/:carId', async (req, res, next) => {
     }
 });
 
-
-router.put('/:carId', async (req, res, next) => {
+// 상품 정보 변경
+router.put('/:carId', validator_admin, async (req, res, next) => {
     const {carId} = req.params;
     const {carName, carPrice, img,speed,mileage,fuel,option,category, color} = req.body;
     try{
@@ -60,7 +61,8 @@ router.put('/:carId', async (req, res, next) => {
     }
 });
 
-router.delete('/:carId', async (req, res, next) => {
+// 상품 정보 삭제
+router.delete('/:carId', validator_admin, async (req, res, next) => {
     const {carId} =req.params;
     try {
         const result = await carService.deleteCarInfo(parseInt(carId));

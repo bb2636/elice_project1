@@ -1,5 +1,7 @@
 import CarService from "../../services/car-service.js";
 import {validator_carup} from "../../middlewares/validator/validator-carup.js";
+import { validator_admin } from "../../middlewares/validator/validator-admin.js";
+
 import {Router} from 'express';
 
 import multer from 'multer';
@@ -21,6 +23,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post("/",
+    validator_admin,
     upload.single('file'),
     validator_carup,
     async (req,res,next) => {
