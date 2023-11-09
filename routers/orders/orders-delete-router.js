@@ -3,11 +3,11 @@ import {deleteOrder} from "../../services/order-services.js";
 // import validateOrder from "../middlewares/validator/validator-order.js";
 const router = express.Router();
 
-// 주문 취소(삭제) 라우터
-router.delete("/:orderId", async (req, res) => {
-  const orderId = req.params.orderId;
+// 주문 취소(삭제) 라우터 <userId = _id>
+router.delete("/:userId", async (req, res) => {
+  const userId = req.params.userId;
   try {
-    const result = await deleteOrder(orderId);
+    const result = await deleteOrder(userId);
     if (result.status === 200) {
       res.status(200).json({status: "200", message: "주문이 성공적으로 취소되었습니다."});
     } else {

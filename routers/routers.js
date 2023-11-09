@@ -41,6 +41,7 @@ mainRouter.use("/car-options", optionRouter);
 
 //상품 등록 라우터
 mainRouter.use("/carup", carupRouter);
+
 //카테고리 등록 라우터
 mainRouter.use("/categoryup", categoryupRouter);
 

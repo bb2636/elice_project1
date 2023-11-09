@@ -51,6 +51,7 @@ export default class UserService {
             user: {
                 email: existUser.email,
                 shortId : existUser.shortId,
+                userId : existUser._id,
             },
             token: token,
         }
