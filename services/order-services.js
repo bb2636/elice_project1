@@ -13,7 +13,7 @@ async function findByUserId(userId) {
 // 주문 삭제 함수
 async function deleteOrder(userId) {
   if (!userId) {
-    throw {status: 404, message: "userID 불일치"};
+    throw {status: 404, message: "userId 불일치"};
   }
 
   try {
