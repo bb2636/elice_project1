@@ -15,8 +15,8 @@ async function login_required_by_user_id (req, res, next) {
    try {
       const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
       const jwtDecoded = jwt.verify(userToken, secretKey);
-      const currentUser = await User.findById(
-         {userId},
+      const currentUser = await User.findOne(
+         {_id: userId},
          { _id: 1}
       );
 
