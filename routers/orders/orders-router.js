@@ -13,7 +13,7 @@ router.get("/", validator_admin, validator_getAllOrders, async (req, res) => {
     const allOrders = await getAllOrders();
     res.status(200).json({status: "200", message: "전체 주문 내역 조회에 성공하였습니다.", allOrders});
   } catch (error) {
-    res.status(error.status || 500).json({message: error.message});
+    res.status(error.status || 400).json({message: error.message});
   }
 });
 
@@ -35,10 +35,10 @@ router.get("/:userId", login_required_by_user_id, validator_getUserOrders, async
     if (orders.length > 0) {
       res.status(200).json({status: "200", message: "주문 내역을 가져오는데 성공했습니다.", orders});
     } else {
-      res.status(400).json({status: "400", message: "구매 내역을 찾을 수 없습니다."});
+      res.status(404).json({status: "404", message: "구매 내역을 찾을 수 없습니다."});
     }
   } catch (error) {
-    res.status(500).json({status: "500", message: "서버 오류"});
+    res.status(400).json({status: "400", message: "서버 오류"});
   }
 });
 

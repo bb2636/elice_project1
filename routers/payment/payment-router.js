@@ -13,9 +13,9 @@ router.post("/:userId", login_required_by_user_id, validator_createOrder, async 
   try {
     const orderNumber = await createOrdered(products, userId, address);
 
-    res.status(200).json({message: "결제가 성공적으로 완료되었습니다.", orderNumber});
+    res.status(201).json({message: "결제가 성공적으로 완료되었습니다.", orderNumber});
   } catch (error) {
-    res.status(500).json({status: "500", error: "결제 실패 및 주문 생성 실패: " + error.message});
+    res.status(400).json({status: "400", error: "결제 실패 및 주문 생성 실패: " + error.message});
   }
 });
 
