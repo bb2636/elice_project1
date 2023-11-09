@@ -10,11 +10,10 @@ const router = Router();
 
 
 /*
- * 모든 회원 정보 요청
+ * 모든 회원 정보 요청 (관리자 기능)
  */
 router.get("/",
-    login_required, // 토큰 검증 미들웨어
-    // validator_admin, // 관리자 검증 미들웨어
+    validator_admin, // 관리자 검증 미들웨어
     async (req, res, next) => {
         try {
             const result = await userService.getAllUsersInfo();
