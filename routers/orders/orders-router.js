@@ -4,12 +4,12 @@ import {Car} from "../../db/models/cars/cars-model.js";
 import {getAllOrders} from "../../services/order-services.js";
 import {validator_getUserOrders, validator_getAllOrders} from "../../middlewares/validator/validator-order.js";
 import { validator_admin } from "../../middlewares/validator/validator-admin.js";
-import { login_required } from "../../middlewares/auth/login-required.js";
+import { login_required_by_user_id } from "../../middlewares/auth/login-required-by-user-id.js";
 
 const router = express.Router();
 
 // 특정 유저의 주문 내역 가져오기
-router.get("/:userId", login_required, validator_getUserOrders, async (req, res) => {
+router.get("/:userId", login_required_by_user_id, validator_getUserOrders, async (req, res) => {
   const userId = req.query.userId;
   if (!userId) {
     return res.status(404).json({status: "404", message: "주문자 정보를 찾을 수 없습니다."});
