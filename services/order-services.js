@@ -30,7 +30,7 @@ async function deleteOrder(orderNumber) {
 
     return {status: 200, message: "주문이 정상적으로 삭제되었습니다."};
   } catch (error) {
-    throw {status: 500, message: "주문을 삭제하는 동안 오류가 발생했습니다: " + error.message};
+    throw {status: 400, message: "주문을 삭제하는 동안 오류가 발생했습니다: " + error.message};
   }
 }
 
