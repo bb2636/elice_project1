@@ -22,6 +22,19 @@ export default class CarService {
                 throw { message: "NO_CARS", };
             }
     }
+    // 등록 상품 조회 (가장 최근 or 가장 이전)
+    async getRecentCarInfo(option = "latest") {
+
+        const order = (option === "latest") ? -1:1;
+        const result = await Car.find({}).sort({ createdAt: order }).limit(1);
+        const carItem = result[0];
+        
+        if(result.length > 0) {
+            return { message: "SUCCESS", car :carItem };
+        } else {
+            throw { message: "NO_CARS", };
+        }
+    }
     //상품 상세 조회
     async getCarInfo(carId){
         const matchCar = await Car.findOne(
