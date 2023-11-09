@@ -3,7 +3,8 @@ import { Car } from '../db/models/cars/cars-model.js';
 export default class CarService {
     //상품 등록
     async CarUp({carName, carPrice, speed,mileage,fuel,carId,option,category, color}, filename) {
-        const car = {carName, carPrice, img:filename, speed, mileage, fuel, carId, option, category, color};
+        const carCounts = await Car.find({});
+        const car = {carName, carPrice, img:`/images/${filename}`, speed, mileage, fuel, carId:carCounts.length+1, option, category, color};
         const existCar = await Car.findOne({carId: car.carId});
         if(existCar != null){
             throw {message: "DUPLICATED"}; //carId중복
@@ -20,6 +21,19 @@ export default class CarService {
             } else {
                 throw { message: "NO_CARS", };
             }
+    }
+    // 등록 상품 조회 (가장 최근 or 가장 이전)
+    async getRecentCarInfo(option = "latest") {
+
+        const order = (option === "latest") ? -1:1;
+        const result = await Car.find({}).sort({ createdAt: order }).limit(1);
+        const carItem = result[0];
+        
+        if(result.length > 0) {
+            return { message: "SUCCESS", car :carItem };
+        } else {
+            throw { message: "NO_CARS", };
+        }
     }
     //상품 상세 조회
     async getCarInfo(carId){
