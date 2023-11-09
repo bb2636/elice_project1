@@ -52,6 +52,7 @@ export default class UserService {
                 email: existUser.email,
                 shortId : existUser.shortId,
                 userId : existUser._id,
+                role: existUser.role,
             },
             token: token,
         }
