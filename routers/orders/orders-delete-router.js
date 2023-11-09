@@ -1,10 +1,11 @@
-import express from "express";
-import {validator_deleteOrder} from "../../middlewares/validator/validator-order.js";
 import {deleteOrder} from "../../services/order-services.js";
+import {login_required_by_user_id} from "../../middlewares/auth/login-required-by-user-id.js";
+import {validator_deleteOrder} from "../../middlewares/validator/validator-order.js";
+
 const router = express.Router();
 
 // 주문 취소(삭제) 라우터
-router.delete("/:orderNumber", validator_deleteOrder, async (req, res, next) => {
+router.delete("/:orderNumber", validator_deleteOrder, login_required_by_user_id, async (req, res, next) => {
   const orderNumber = req.params.orderNumber;
   try {
     const result = await deleteOrder(orderNumber);

@@ -1,19 +1,19 @@
 
-import { Router } from 'express';
-import UserService from '../../services/user-service.js';
-import { login_required } from "../../middlewares/auth/login-required.js";
+import { Router } from "express";
+import UserService from "../../services/user-service.js";
+import { validator_admin } from "../../middlewares/validator/validator-admin.js";
 import { validator_params } from '../../middlewares/validator/validator-params.js';
-
+import { login_required } from "../../middlewares/auth/login-required.js";
 
 const userService = new UserService;
 const router = Router();
 
 
 /*
- * 모든 회원 정보 요청
+ * 모든 회원 정보 요청 (관리자 기능)
  */
 router.get("/",
-    login_required, // 토큰 검증 미들웨어
+    validator_admin, // 관리자 검증 미들웨어
     async (req, res, next) => {
         try {
             const result = await userService.getAllUsersInfo();

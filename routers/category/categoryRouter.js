@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { validator_admin } from "../../middlewares/validator/validator-admin.js";
 import CategoryService from '../../services/category-service.js';
 const categoryService = new CategoryService;
 const router = Router();
@@ -20,7 +21,7 @@ router.get('/:carType', async (req, res, next) => {
 });
 
 
-router.put('/:carId', async (req, res, next) => {
+router.put('/:carId', validator_admin, async (req, res, next) => {
     const { carType } = req.body; //id는 수정안함
     try {
         const result = await categoryService.updateCategoryInfo(parseInt(carId), carType);
@@ -36,7 +37,7 @@ router.put('/:carId', async (req, res, next) => {
     }
 });
 
-router.delete('/:carId', async (req, res, next) => {
+router.delete('/:carId', validator_admin, async (req, res, next) => {
     const {carId} = req.params;
     try {
         const result = await categoryService.deleteCategoryInfo(parseInt(carId));

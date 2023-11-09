@@ -1,12 +1,12 @@
 import express from "express";
 import {createOrdered} from "../../services/order-services.js";
 import {validator_createOrder} from "../../middlewares/validator/validator-order.js";
-import {login_required} from "../../middlewares/auth/login-required.js";
+import {login_required_by_user_id} from "../../middlewares/auth/login-required-by-user-id.js";
 
 const router = express.Router();
 
 // 결제 성공하면 주문 생성 or 결제 실패
-router.post("/", validator_createOrder, async (req, res) => {
+router.post("/:userId", login_required_by_user_id, validator_createOrder, async (req, res) => {
   const {address, userId} = req.body;
   const products = req.body.products;
 
