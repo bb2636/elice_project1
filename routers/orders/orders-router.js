@@ -1,6 +1,5 @@
 import express from "express";
 import Order from "../../db/models/orders/order-model.js";
-import {Car} from "../../db/models/cars/cars-model.js";
 import {getAllOrders} from "../../services/order-services.js";
 import {validator_getUserOrders, validator_getAllOrders} from "../../middlewares/validator/validator-order.js";
 

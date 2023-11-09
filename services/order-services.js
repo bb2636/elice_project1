@@ -1,5 +1,4 @@
 import Order from "../db/models/orders/order-model.js";
-import {Car} from "../db/models/cars/cars-model.js";
 
 //주문 정보 찾는 함수
 async function findByUserId(userId) {
@@ -11,19 +10,19 @@ async function findByUserId(userId) {
 }
 
 // 주문 삭제 함수
-async function deleteOrder(userId) {
-  if (!userId) {
-    throw {status: 404, message: "userId 불일치"};
+async function deleteOrder(orderNumber) {
+  if (!orderNumber) {
+    throw {status: 404, message: "orderNumber 불일치"};
   }
 
   try {
-    const order = await findByUserId(userId);
+    const order = await Order.findOne({orderNumber});
 
     if (!order) {
       return {status: 404, message: "해당 유저의 주문 내역이 없습니다."};
     }
 
-    const deleteResult = await Order.deleteOne({userId});
+    const deleteResult = await Order.deleteOne({orderNumber});
 
     if (deleteResult.deletedCount === 0) {
       return {status: 404, message: "삭제 가능한 주문이 없습니다."};
@@ -81,7 +80,9 @@ async function createOrdered(products, userId, address) {
   };
 
   try {
-    await Order.create(newOrderData);
+    const order = new Order(newOrderData);
+    await order.save();
+    console.log("Order Saved Successfully:", order);
     return orderNumber;
   } catch (error) {
     throw {status: 404, message: "정보 누락으로 주문 저장에 실패하였습니다."};
@@ -105,4 +106,5 @@ function orderNumbers() {
   return orderNumber;
 }
 
-export {deleteOrder, findByUserId, getAllOrders, createOrdered, calculateTotalPrice, productMissing, orderNumbers};
+export {deleteOrder, findByUserId, getAllOrders, createOrdered, calculateTotalPrice};
+export {productMissing, orderNumbers};
