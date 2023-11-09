@@ -31,7 +31,7 @@ router.get("/:userId", login_required, validator_getUserOrders, async (req, res)
 });
 
 // 주문 전체 조회 라우터
-router.get("/", validator_admin, validator_getAllOrders, , async (req, res) => {
+router.get("/", validator_admin, validator_getAllOrders, async (req, res) => {
   try {
     const allOrders = await getAllOrders();
     res.status(200).json({status: "200", message: "전체 주문 내역 조회에 성공하였습니다.", allOrders});

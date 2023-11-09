@@ -1,7 +1,7 @@
 import express from "express";
 import {deleteOrder} from "../../services/order-services.js";
 import { login_required } from "../../middlewares/auth/login-required.js";
-import validateOrder from "../middlewares/validator/validator-order.js";
+import { validator_deleteOrder } from "../../middlewares/validator/validator-order.js";
 const router = express.Router();
 
 // 주문 취소(삭제) 라우터 <userId = _id>

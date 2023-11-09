@@ -1,5 +1,4 @@
 import express from "express";
-import { login_required } from "../../middlewares/auth/login-required.js";
 import {createOrdered} from "../../services/order-services.js";
 import {validator_createOrder} from "../../middlewares/validator/validator-order.js";
 import {login_required} from "../../middlewares/auth/login-required.js";
