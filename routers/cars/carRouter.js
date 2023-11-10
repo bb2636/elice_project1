@@ -36,8 +36,6 @@ router.get('/:carId', async (req, res, next) => {
         if(result.message === "SUCCESS"){
             res.status(200).json({message:"상품 정보 조회에 성공했습니다", car: result.car});
             return;
-        }else if(result.message === "NO_MATCHES"){
-            throw {status:404, message: "존재하지 않는 상품입니다"};
         }
     }catch (err) {
         res.status(err.status).json({message:err.message});
