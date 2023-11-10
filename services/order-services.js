@@ -9,6 +9,18 @@ async function findByUserId(userId) {
   }
 }
 
+// 주문 정보 변경 함수
+async function updateOrder(orderNumber, data) {
+  const result = await Order.findOneAndUpdate(
+    {orderNumber:orderNumber},
+    {status:data.status},
+    { new: true });
+  if(!result) {
+    throw {status: 404, message: "orderNumber 불일치"};
+  }
+  return result;
+}
+
 // 주문 삭제 함수
 async function deleteOrder(orderNumber) {
   if (!orderNumber) {
@@ -106,5 +118,5 @@ function orderNumbers() {
   return orderNumber;
 }
 
-export {deleteOrder, findByUserId, getAllOrders, createOrdered, calculateTotalPrice};
+export {deleteOrder, findByUserId, getAllOrders, updateOrder, createOrdered, calculateTotalPrice};
 export {productMissing, orderNumbers};
