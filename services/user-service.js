@@ -9,7 +9,8 @@ export default class UserService {
 
         const existUser = await User.findOne( {email: user.email} );
         if(existUser !== null) {
-            throw { message : "DUPLICATED"};
+            // throw { message : "DUPLICATED"};
+            throw {status: 400, message: '이미 가입한 이메일입니다.'};
         } 
         
         const salt = await bcrypt.genSalt(10);
