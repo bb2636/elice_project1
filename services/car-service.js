@@ -69,7 +69,8 @@ export default class CarService {
         if(deleteCar){
             return {message: "SUCCESS"};
         }else{
-            throw {message: "NO_MATCHES"};
+            //throw {message: "NO_MATCHES"};
+            throw {status: 404, message: "존재하지 않는 상품입니다"};
         }
     }
 }
