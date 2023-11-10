@@ -3,11 +3,15 @@ import { Car } from '../db/models/cars/cars-model.js';
 export default class CarService {
     //상품 등록
     async CarUp({carName, carPrice, speed,mileage,fuel,carId,option,category, color, img}) { //}, filename) {
-        const carCounts = await Car.find({});
-        const car = {carName, carPrice, img, speed, mileage, fuel, carId:carCounts.length+1, option, category, color};
+        //const carCounts = await Car.find({});
+        const result = await Car.find({}).sort({ carId: -1 }).limit(1);
+        const lastCarId = result[0].carId;
+
+        const car = {carName, carPrice, img, speed, mileage, fuel, carId:lastCarId+1, option, category, color};
         const existCar = await Car.findOne({carId: car.carId});
         if(existCar != null){
-            throw {message: "DUPLICATED"}; //carId중복
+            // throw {message: "DUPLICATED"}; //carId중복
+            throw {status: 400, message: "이미 등록된 상품아이디 입니다"};
         }
         const newCar = await Car.create(car);
             return {message : "SUCCESS", car: newCar};
