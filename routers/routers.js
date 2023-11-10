@@ -10,6 +10,8 @@ import signoutRouter from "./account/signout-router.js";
 import carupRouter from "./cars/carup-router.js";
 import categoryRouter from "./category/categoryRouter.js";
 import categoryupRouter from "./category/categoryupRouter.js";
+import uploadRouter from "./upload-router.js";
+
 
 //결제 라우터
 import paymentRouter from "./payment/payment-router.js";
@@ -38,6 +40,9 @@ mainRouter.use("/cars", carRouter);
 mainRouter.use("/category", categoryRouter);
 
 mainRouter.use("/car-options", optionRouter);
+
+// 이미지업로드 라우터
+mainRouter.use("/upload", uploadRouter);
 
 //상품 등록 라우터
 mainRouter.use("/carup", carupRouter);
