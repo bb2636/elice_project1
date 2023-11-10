@@ -1,3 +1,10 @@
+import { createTransport } from 'nodemailer';
+import fs from 'fs/promises';
+import {config} from "dotenv";
+config(); // dotenv 설정 호출
+const MAILER_NAME = process.env.MAILER_NAME;
+const MAILER_PASSWORD = process.env.MAILER_PASSWORD;
+import { User } from '../db/models/users/user-model.js';
 import Order from "../db/models/orders/order-model.js";
 
 //주문 정보 찾는 함수
@@ -95,6 +102,7 @@ async function createOrdered(products, userId, address) {
     const order = new Order(newOrderData);
     await order.save();
     console.log("Order Saved Successfully:", order);
+    sendMailer(userId, orderNumber);
     return orderNumber;
   } catch (error) {
     throw {status: 404, message: "정보 누락으로 주문 저장에 실패하였습니다."};
@@ -107,7 +115,7 @@ function productMissing(product) {
   return !carId || !carName || !img || !carPrice || !option || !color;
 }
 
-// 주문 번호 생성
+// 주문 번호 생성 (중복 값이 생성될 확률은 0.0000000031% from 헬피)
 function orderNumbers() {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let orderNumber = "";
@@ -117,6 +125,41 @@ function orderNumbers() {
   }
   return orderNumber;
 }
+
+// 주문 완료 이메일 발송
+async function sendMailer(userId, orderNumber) {
+  // nodemailer transporter 생성
+  const transporter = createTransport({
+    service: 'Gmail',
+    auth: {
+      user: MAILER_NAME,
+      pass: MAILER_PASSWORD,
+    }
+  });
+
+  const user = await User.findByUserId(userId);
+  
+  // HTML 파일 읽어오기
+  //const html = await fs.readFile('../view/mailer-template.html', 'utf-8');
+
+  // 메일 옵션 설정
+  const mailOptions = {
+    from: MAILER_NAME,
+    to: user.email,
+    subject: '주문이 완료되었습니다.',
+    html:`<html><body><h3>주문 번호 : ${orderNumber}<h3></body></html>`
+  };
+
+  // 메일 전송
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('메일이 성공적으로 전송되었습니다.');
+    }
+  });
+}
+
 
 export {deleteOrder, findByUserId, getAllOrders, updateOrder, createOrdered, calculateTotalPrice};
 export {productMissing, orderNumbers};
