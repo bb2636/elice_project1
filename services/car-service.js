@@ -59,7 +59,8 @@ export default class CarService {
             if(updateCar){
                 return {message: "SUCCESS", car: updateCar};
             }else{
-                throw {message: "NO_MATCHES"};
+                //throw {message: "NO_MATCHES"};
+                throw {status: 404, message: "존재하지 않는 상품입니다"};
             }
     }
     //상품 삭제
