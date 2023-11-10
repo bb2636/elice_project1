@@ -25,7 +25,7 @@ router.post("/",
             if(!result) {
                 throw {status: "400", message: "업로드 중에 오류가 발생했습니다."}
             }
-            res.status(200).json({message: "업로드에 성공했습니다.", img: result});
+            res.status(201).json({message: "업로드에 성공했습니다.", img: result});
         } catch (err) {
             res.status(err.status).json({message:err.message});
         }
