@@ -23,7 +23,8 @@ export default class CarService {
             if(allCars) {
                 return { message: "SUCCESS", car :allCars };
             } else {
-                throw { message: "NO_CARS", };
+                //throw { message: "NO_CARS", };
+                throw {status: 404, message: "상품이 존재하지 않습니다."};
             }
     }
     // 등록 상품 조회 (가장 최근 or 가장 이전)
@@ -36,7 +37,8 @@ export default class CarService {
         if(result.length > 0) {
             return { message: "SUCCESS", car :carItem };
         } else {
-            throw { message: "NO_CARS", };
+            //throw { message: "NO_CARS", };
+            throw {status: 404, message: "상품이 존재하지 않습니다."};
         }
     }
     //상품 상세 조회
@@ -47,7 +49,8 @@ export default class CarService {
         if(matchCar){
             return {message:"SUCCESS", car: matchCar};
         }else{ 
-            throw {message: "NO_MATCHES"};
+            // throw {message: "NO_MATCHES"};
+            throw {status:404, message: "존재하지 않는 상품입니다"};
         }
     }
     //상품 수정
@@ -59,7 +62,8 @@ export default class CarService {
             if(updateCar){
                 return {message: "SUCCESS", car: updateCar};
             }else{
-                throw {message: "NO_MATCHES"};
+                //throw {message: "NO_MATCHES"};
+                throw {status: 404, message: "존재하지 않는 상품입니다"};
             }
     }
     //상품 삭제
@@ -68,7 +72,8 @@ export default class CarService {
         if(deleteCar){
             return {message: "SUCCESS"};
         }else{
-            throw {message: "NO_MATCHES"};
+            //throw {message: "NO_MATCHES"};
+            throw {status: 404, message: "존재하지 않는 상품입니다"};
         }
     }
 }

@@ -7,7 +7,8 @@ export default class CategoryService{
         const category = {carId, carType};
         const existCategory = await category.findOne({carId:category.carId});
         if(existCategory != null){
-            throw {message: "DUPLICATED"};
+            // throw {message: "DUPLICATED"};
+            throw {status:400, message: "이미 등록된 상품아이디 입니다"};
         }
         const newCategory = await category.create(category);
         return {message: "SUCCESS", category: newCategory};
@@ -21,7 +22,8 @@ export default class CategoryService{
             return {message: "SUCCESS", category: allCategory};
         }
         if(allCategory.length > 0){
-            throw {message: "NO_MATCHES"};
+            // throw {message: "NO_MATCHES"};
+            throw {status:404, message: "존재하지 않는 카테고리입니다"};
         }
     }
     //카테고리 수정
@@ -33,7 +35,8 @@ export default class CategoryService{
         if(updateCategory){
             return {message: "SUCCESS", category: updateCategory};
         }else{
-            throw {message: "NO_MATCHES"};
+            // throw {message: "NO_MATCHES"};
+            throw {status:404, message: "존재하지 않는 카테고리입니다"};
         }
     }
     //카테고리 삭제
@@ -42,7 +45,8 @@ export default class CategoryService{
         if(deleteCategory){
             return {message: "SUCCESS"};
         }else{
-            throw {message: "NO_MATCHES"};
+            // throw {message: "NO_MATCHES"};
+            throw {status:404, message: "존재하지 않는 카테고리입니다"};
         }
     }
 }

@@ -26,7 +26,8 @@ export default class UserService {
         const existUser = await User.findOne( {email: user.email} );
 
         if(!existUser) {
-            throw { message : "NOT_EXIST_USER"};
+            // throw { message : "NOT_EXIST_USER"};
+            throw {status: 400, message: '이메일 또는 비밀번호를 확인해주세요.'};
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -34,7 +35,8 @@ export default class UserService {
         const isPasswordValid = await bcrypt.compare(user.password, existUser.password);
 
         if(!isPasswordValid) {
-            throw { message : "NOT_MATCHED" };
+            //throw { message : "NOT_MATCHED" };
+            throw {status: 400, message: '비밀번호가 일치하지 않습니다.'};
         }
         
         const expirationTime = Math.floor(Date.now() / 1000) + 60*60*24; // 현재시간 + @, e.g. 60*60 = 1시간 후 만료
@@ -86,7 +88,8 @@ export default class UserService {
             { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
         
         if(!matchedUser) {
-            throw { message: "NO_MATCHES", };
+            // throw { message: "NO_MATCHES", };
+            throw {status: 404, message: "존재하지 않는 계정입니다.",};
         }
         
         return { message: "SUCCESS", user: matchedUser};
@@ -100,7 +103,8 @@ export default class UserService {
             { new: true } );
         
         if(!matchedUser) {
-            throw { message: "NO_MATCHES", };
+            //throw { message: "NO_MATCHES", };
+            throw {status: 404, message: "존재하지 않는 계정입니다.",};
         }
         
         return { message: "SUCCESS", user: matchedUser};
@@ -113,7 +117,8 @@ export default class UserService {
         //return deletedUser //조건에 맞지 않으면 null을 반환
         
         if(!deletedUser) {
-            throw { message: "NO_MATCHES", };
+            // throw { message: "NO_MATCHES", };
+            throw {status: 404, message: "존재하지 않는 계정입니다.",};
         }
         return { message: "SUCCESS", };
     }

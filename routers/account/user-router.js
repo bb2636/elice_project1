@@ -59,8 +59,6 @@ router.get("/:shortId",
                     user: result.user,
                 })
                 return;
-            } else if (result.message ==="NO_MATCHES") {
-                throw {status: 404, message: "존재하지 않는 계정입니다.",};
             } else {
                 throw {status: 404, message: "unknown error",};
             }
@@ -97,8 +95,6 @@ router.put("/:shortId",
                     user: result.user,
                 })
                 return;
-            } else if (result.message ==="NO_MATCHES") {
-                throw {status: 404, message: "존재하지 않는 계정입니다.",};
             } else {
                 throw {status: 404, message: "unknown error",};
             }
@@ -130,8 +126,6 @@ router.delete("/:shortId",
                     message: "회원 정보 삭제에 성공했습니다.",
                 })
                 return;
-            } else if (result.message ==="NO_MATCHES") {
-                throw {status: 404, message: "존재하지 않는 계정입니다.",};
             } else {
                 throw {status: 404, message: "unknown error",};
             }

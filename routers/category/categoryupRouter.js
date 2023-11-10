@@ -12,8 +12,6 @@ router.post('/', validator_admin, validator_categoryup,
             const result = await categoryService.CategoryUp(req.body);
             if(result.message = "SUCCESS"){
                 res.status(201).json({message:'카테고리 등록 성공', car: result.car});
-            }else if(result.message === "DUPLICATED"){
-                throw {status:400, message: "이미 등록된 상품아이디 입니다"};
             }
         } catch (err) {
             res.status(err.status).json({message:err.message});
