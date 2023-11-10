@@ -1,7 +1,7 @@
 import express from "express";
 import Order from "../../db/models/orders/order-model.js";
-import {getAllOrders} from "../../services/order-services.js";
-import {validator_getUserOrders, validator_getAllOrders} from "../../middlewares/validator/validator-order.js";
+import {getAllOrders, updateOrder} from "../../services/order-services.js";
+import {validator_getUserOrders, validator_getAllOrders, validator_deleteOrder } from "../../middlewares/validator/validator-order.js";
 import {validator_admin} from "../../middlewares/validator/validator-admin.js";
 import {login_required_by_user_id} from "../../middlewares/auth/login-required-by-user-id.js";
 
@@ -39,6 +39,23 @@ router.get("/:userId", login_required_by_user_id, validator_getUserOrders, async
     }
   } catch (error) {
     res.status(400).json({status: "400", message: "서버 오류"});
+  }
+});
+
+// 특정 유저의 주문 상태 변경
+router.put("/:userId", login_required_by_user_id, validator_deleteOrder, async (req, res, next) => {
+  const orderNumber = req.query.orderNumber;
+
+  try {
+    const result = await updateOrder(orderNumber, req.body);
+    if (result) {
+      res.status(200).json({status: "200", message: "주문이 성공적으로 변경되었습니다.", orderNumber:result.orderNumber});
+    } else {
+      res.status(400).json({status: "400", message: "서버 오류입니다."});
+    }
+  } catch(error) {
+    res.status(error.status)
+       .json({message: error.message, });
   }
 });
 

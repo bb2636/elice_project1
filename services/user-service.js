@@ -120,7 +120,7 @@ export default class UserService {
     async getAllUsersInfo () {
         
         const allUsers = await User.find({}, 
-            { userName: 1, email: 1 ,age:1, phone: 1, address:1, role:1, orderList:1, });
+            { userName: 1, email: 1 ,age:1, phone: 1, address:1, role:1, orderList:1, shortId:1 });
         
         return { message: "SUCCESS", users:allUsers };
     }
