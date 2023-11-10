@@ -129,6 +129,7 @@ function orderNumbers() {
 // 주문 완료 이메일 발송
 async function sendMailer(userId, orderNumber) {
   // nodemailer transporter 생성
+  console.log(MAILER_NAME, MAILER_PASSWORD);
   const transporter = createTransport({
     service: 'Gmail',
     auth: {
@@ -137,7 +138,7 @@ async function sendMailer(userId, orderNumber) {
     }
   });
 
-  const user = await User.findByUserId(userId);
+  const user = await User.findById(userId);
   
   // HTML 파일 읽어오기
   //const html = await fs.readFile('../view/mailer-template.html', 'utf-8');
