@@ -88,7 +88,8 @@ export default class UserService {
             { userName: 1, email: 1 ,age:1, phone: 1, address:1, } );
         
         if(!matchedUser) {
-            throw { message: "NO_MATCHES", };
+            // throw { message: "NO_MATCHES", };
+            throw {status: 404, message: "존재하지 않는 계정입니다.",};
         }
         
         return { message: "SUCCESS", user: matchedUser};
@@ -102,7 +103,8 @@ export default class UserService {
             { new: true } );
         
         if(!matchedUser) {
-            throw { message: "NO_MATCHES", };
+            //throw { message: "NO_MATCHES", };
+            throw {status: 404, message: "존재하지 않는 계정입니다.",};
         }
         
         return { message: "SUCCESS", user: matchedUser};
@@ -115,7 +117,8 @@ export default class UserService {
         //return deletedUser //조건에 맞지 않으면 null을 반환
         
         if(!deletedUser) {
-            throw { message: "NO_MATCHES", };
+            // throw { message: "NO_MATCHES", };
+            throw {status: 404, message: "존재하지 않는 계정입니다.",};
         }
         return { message: "SUCCESS", };
     }
