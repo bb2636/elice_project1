@@ -37,7 +37,7 @@ async function validator_getAllOrders(req, res, next) {
 
 // 삭제 validator
 async function validator_deleteOrder(req, res, next) {
-  const {orderNumber} = req.params;
+  const orderNumber = req.query.orderNumber;
   if (!orderNumber) {
     res.status(400).json({status: "404", error: "유효하지 않은 주문 번호입니다."});
     return;
