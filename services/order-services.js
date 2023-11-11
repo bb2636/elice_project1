@@ -126,10 +126,9 @@ function orderNumbers() {
   return orderNumber;
 }
 
-// 주문 완료 이메일 발송
+// 주문 완료 이메일 발송 함수
 async function sendMailer(userId, orderNumber) {
   // nodemailer transporter 생성
-  console.log(MAILER_NAME, MAILER_PASSWORD);
   const transporter = createTransport({
     service: 'Gmail',
     auth: {
@@ -139,26 +138,25 @@ async function sendMailer(userId, orderNumber) {
   });
 
   const user = await User.findById(userId);
-  
-  // HTML 파일 읽어오기
-  //const html = await fs.readFile('../view/mailer-template.html', 'utf-8');
+  if(user) {
+    // 메일 옵션 설정
+    const mailOptions = {
+      from: MAILER_NAME,
+      to: user.email,
+      subject: '[EliceMotors] 주문이 완료되었습니다.',
+      html:`<html><body><h3>주문 번호 : ${orderNumber}<h3>
+            <p>주문 정보는 주문 내역 페이지에서 확인하실 수 있습니다.</body></html>`
+    };
 
-  // 메일 옵션 설정
-  const mailOptions = {
-    from: MAILER_NAME,
-    to: user.email,
-    subject: '주문이 완료되었습니다.',
-    html:`<html><body><h3>주문 번호 : ${orderNumber}<h3></body></html>`
-  };
-
-  // 메일 전송
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('메일이 성공적으로 전송되었습니다.');
-    }
-  });
+    // 메일 전송
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('메일이 성공적으로 전송되었습니다.');
+      }
+    });
+  }
 }
 
 
